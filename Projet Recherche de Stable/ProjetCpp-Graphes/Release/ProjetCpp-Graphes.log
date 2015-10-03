@@ -1,0 +1,57 @@
+﻿Build started 17/09/2015 17:34:57.
+     1>Project "C:\Users\Paul Fayoux\Documents\doc\Cours\DI4\Projet Recherche de Stable\ProjetCpp-Graphes\ProjetCpp-Graphes.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (ProjetCpp-Graphes.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>InitializeBuildStatus:
+         Creating "Release\Projet-G.3A28783C.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Cedges.cpp Cedges_UNIT.cpp Cexception.cpp Cfile.cpp Cfile_UNIT.cpp Cgraph.cpp Cgraph_table_UNIT.cpp Cgraph_UNIT.cpp Cgraph_table.cpp Cmax_inde_sets_table.cpp Cmax_inde_sets_table_UNIT.cpp Cvertex.cpp Cvertex_UNIT.cpp main.cpp stdafx.cpp
+         Cedges.cpp
+         Cedges_UNIT.cpp
+         Cexception.cpp
+         Cfile.cpp
+     1>Cfile.cpp(17): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+         Cfile_UNIT.cpp
+         Cgraph.cpp
+     1>Cgraph.cpp(67): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+     1>Cgraph.cpp(361): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+     1>Cgraph.cpp(446): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+     1>Cgraph.cpp(619): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+         Cgraph_table_UNIT.cpp
+         Cgraph_UNIT.cpp
+         Cgraph_table.cpp
+         Cmax_inde_sets_table.cpp
+         Cmax_inde_sets_table_UNIT.cpp
+         Cvertex.cpp
+     1>Cvertex.cpp(85): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+     1>Cvertex.cpp(196): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+     1>Cvertex.cpp(253): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+         Cvertex_UNIT.cpp
+         main.cpp
+         stdafx.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Paul Fayoux\Documents\doc\Cours\DI4\Projet Recherche de Stable\Release\Projet-Graphes_Stable.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Paul Fayoux\Documents\doc\Cours\DI4\Projet Recherche de Stable\Release\Projet-Graphes_Stable.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Paul Fayoux\Documents\doc\Cours\DI4\Projet Recherche de Stable\Release\Projet-Graphes_Stable.lib" /MACHINE:X86 /SAFESEH Release\Cedges.obj
+         Release\Cedges_UNIT.obj
+         Release\Cexception.obj
+         Release\Cfile.obj
+         Release\Cfile_UNIT.obj
+         Release\Cgraph.obj
+         Release\Cgraph_table_UNIT.obj
+         Release\Cgraph_UNIT.obj
+         Release\Cgraph_table.obj
+         Release\Cmax_inde_sets_table.obj
+         Release\Cmax_inde_sets_table_UNIT.obj
+         Release\Cvertex.obj
+         Release\Cvertex_UNIT.obj
+         Release\main.obj
+         Release\stdafx.obj
+         Generating code
+         Finished generating code
+         ProjetCpp-Graphes.vcxproj -> C:\Users\Paul Fayoux\Documents\doc\Cours\DI4\Projet Recherche de Stable\Release\Projet-Graphes_Stable.exe
+       FinalizeBuildStatus:
+         Deleting file "Release\Projet-G.3A28783C.tlog\unsuccessfulbuild".
+         Touching "Release\Projet-G.3A28783C.tlog\Projet-Graphes_Stable.lastbuildstate".
+     1>Done Building Project "C:\Users\Paul Fayoux\Documents\doc\Cours\DI4\Projet Recherche de Stable\ProjetCpp-Graphes\ProjetCpp-Graphes.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.65
