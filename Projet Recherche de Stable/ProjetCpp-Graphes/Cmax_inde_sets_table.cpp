@@ -136,7 +136,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndep
 *******************************************************************************/
 void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets){
 	Cgraph * pGraph_copy = new Cgraph(*pGraph);
-	
+	pGraph_copy->GRAorder_by_degree();
 
 	if (pGraph_copy->GRAget_nb_vertex() == 0){
 		if (pIndependant_sets->GRAget_nb_vertex() > uiMITsize_max){
@@ -167,4 +167,59 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 			pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
 		}
 	}
+}
+
+
+/***
+* void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - search all the maximum independant sets of a graph
+*
+*Purpose:
+*       search all the maximum independant sets of a graph
+*
+*Entry:
+*       Cgraph * pGraph				-		a graph , to determine independant sets
+*		Cgraph * pIndependant_sets	-		an independant set of the graph, NULL if first call of the function.
+*
+*Return:
+*		nothing
+*
+*******************************************************************************/
+void Cmax_inde_sets_table::MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pIndependant_sets){
+	
+}
+
+/***
+* void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - search all the maximum independant sets of a graph
+*
+*Purpose:
+*       search all the maximum independant sets of a graph
+*
+*Entry:
+*       Cgraph * pGraph				-		a graph , to determine independant sets
+*		Cgraph * pIndependant_sets	-		an independant set of the graph, NULL if first call of the function.
+*
+*Return:
+*		nothing
+*
+*******************************************************************************/
+void Cmax_inde_sets_table::MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pIndependant_sets){
+	printf("TODO");
+}
+
+/***
+* void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - search all the maximum independant sets of a graph
+*
+*Purpose:
+*       search all the maximum independant sets of a graph
+*
+*Entry:
+*       Cgraph * pGraph				-		a graph , to determine independant sets
+*		Cgraph * pIndependant_sets	-		an independant set of the graph, NULL if first call of the function.
+*
+*Return:
+*		nothing
+*
+*******************************************************************************/
+void Cmax_inde_sets_table::MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pIndependant_sets){
+	printf("TODO");
 }

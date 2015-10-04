@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 	
 	// Number of the operation chosen to do on run-time
 	unsigned int uiChooseOperation = 0;
-
+	unsigned int uiVerify = 1;
 	if (argc > 1 && argv[1] != NULL)
 	{
 		try
@@ -92,18 +92,23 @@ int main(int argc, char* argv[])
 
 
 		// While the choice made by the user is invalid, prompt again
-		while (uiChooseOperation != 1 && uiChooseOperation != 2 && uiChooseOperation != 3){
+		while (uiChooseOperation != 10 && uiChooseOperation!=uiVerify){
 			std::cout << std::endl << "Veuiller choisir l'op\x082" << "ration \x085 faire :" << std::endl << std::endl;
 
-			std::cout << "1 - Trouver tous les ensembles maximum ind\x082pendants de sommets" << std::endl;
-			std::cout << "2 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
-			std::cout << "3 - Quitter" << std::endl << std::endl;
+			std::cout << "1 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 1" << std::endl;
+			std::cout << "2 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 2" << std::endl;
+			std::cout << "3 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 3" << std::endl;
+			std::cout << "4 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 4" << std::endl;
+			std::cout << "5 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
+			std::cout << "6 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
+			std::cout << "10 - Quitter" << std::endl << std::endl;
 
 			std::cout << "Choix : ";
 
 			// Choose operation to do, if a non number is entered, uiChooseOperation will be equals to 0
 			std::cin >> uiChooseOperation;
-			if (uiChooseOperation == 0)
+			uiVerify = uiChooseOperation;
+			if (uiChooseOperation == 0 || (uiChooseOperation>7 && uiChooseOperation!=42))
 			{
 				std::cout << std::endl << "\n Avertissement : votre choix est invalide." << std::endl;
 			}
@@ -114,14 +119,66 @@ int main(int argc, char* argv[])
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
-				pGraph->GRAorder_by_degree();
-				pMax_inde_sets_table->MITenum_max_inde_set(pGraph, new Cgraph());
+				pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				pMax_inde_sets_table->GRTprint();
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
+			}
+			// 1 - Search Independant sets
+			else if (uiChooseOperation == 2){
+				printf("\n ****************************************\n");
+				printf(" ** Starting searching independant sets : ** \n");
+				printf(" **************************************** \n\n");
+
+				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, new Cgraph());
+				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				pMax_inde_sets_table->GRTprint();
+				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
+			}
+			// 1 - Search Independant sets
+			else if (uiChooseOperation == 3){
+				printf("\n ****************************************\n");
+				printf(" ** Starting searching independant sets : ** \n");
+				printf(" **************************************** \n\n");
+
+				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				pMax_inde_sets_table->MITenum_max_inde_set3(pGraph, new Cgraph());
+				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				pMax_inde_sets_table->GRTprint();
+				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
+			}
+			// 1 - Search Independant sets
+			else if (uiChooseOperation == 4){
+				printf("\n ****************************************\n");
+				printf(" ** Starting searching independant sets : ** \n");
+				printf(" **************************************** \n\n");
+
+				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				pMax_inde_sets_table->MITenum_max_inde_set4(pGraph, new Cgraph());
+				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				pMax_inde_sets_table->GRTprint();
+				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
+			}
+			// 1 - Search Independant sets
+			else if (uiChooseOperation == 5){
+				printf("\n ****************************************\n");
+				printf(" ** Starting searching independant sets : ** \n");
+				printf(" **************************************** \n\n");
+
+				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				pMax_inde_sets_table->MITenum_max_inde_set5(pGraph, new Cgraph());
+				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				pMax_inde_sets_table->GRTprint();
+				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
 			}
 			// 2 - Invert graph
-			else if (uiChooseOperation == 2)
+			else if (uiChooseOperation == 6)
 			{
 				printf("\n ****************************************\n");
 				printf(" ** Starting creation inverted graph : ** \n");
@@ -138,13 +195,15 @@ int main(int argc, char* argv[])
 				{
 					printf("Warning : No graph to invert, the program will stop. \n");
 				}
-
+				uiChooseOperation = 100;
 			}
 			// 3 - Quit
-			else if (uiChooseOperation == 3){
+			else if (uiChooseOperation == 7){
+				uiChooseOperation = 100;
 				break;
 			}
 			else if (uiChooseOperation == 42){
+				uiChooseOperation = 100;
 				std::cout << "\n Ceci n'est pas un oeuf de p\x083" << "cques ! " << std::endl;
 			}
 		}

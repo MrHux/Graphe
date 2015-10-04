@@ -85,6 +85,9 @@ public:
 	*******************************************************************************/
 	void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets);
 	
-	void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets);
+	void MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets);
+	void MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pIndependant_sets);
+	void MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pIndependant_sets);
+	void MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pIndependant_sets);
 };
 
