@@ -870,6 +870,35 @@ void Cgraph::GRAorder_by_degree(){
 	}
 }
 
+unsigned int Cgraph::GRAcount_nb_edge_of_successor(unsigned int uiIndex_vertex){
+	//browse every successor of the vertex at index 0 and count the number of edge of his successors
+	unsigned int uiNb_edges_of_successors = 0;
+	for (unsigned int uiIndex_succ = 0; uiIndex_succ < this->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_in(); uiIndex_succ++){
+		uiNb_edges_of_successors = uiNb_edges_of_successors + this->GRAget_vertex_from_vertex_id(this->GRAget_vertex(uiIndex_vertex)->VERget_list_edges_in()[uiIndex_succ]->EDGget_id_vertex_in())->VERget_nb_edges_in();
+	}
+	for (unsigned int uiIndex_succ = 0; uiIndex_succ < this->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_out(); uiIndex_succ++){
+		uiNb_edges_of_successors = uiNb_edges_of_successors + this->GRAget_vertex_from_vertex_id(this->GRAget_vertex(uiIndex_vertex)->VERget_list_edges_out()[uiIndex_succ]->EDGget_id_vertex_in())->VERget_nb_edges_out();
+	}
+	return uiNb_edges_of_successors;
+}
+
+
+unsigned int Cgraph::GRAget_max_nb_edge_of_successor(){
+	unsigned int uiMax_count_nb_edge_of_successor = 0;
+	unsigned int uiNb_edges = 0;
+	unsigned int uiCurrent_count = 0;
+	for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < GRAget_nb_vertex() ; uiIndex_vertex++)
+	{
+		uiCurrent_count = GRAcount_nb_edge_of_successor(uiIndex_vertex);
+
+		uiNb_edges = GRAget_vertex(0)->VERget_nb_edges_out() + GRAget_vertex(0)->VERget_nb_edges_in();
+		if (uiNb_edges == 0)uiNb_edges = 1;
+		if (uiMax_count_nb_edge_of_successor < (uiCurrent_count/uiNb_edges)){
+			uiMax_count_nb_edge_of_successor = uiCurrent_count / uiNb_edges;
+		}
+	}
+	return uiMax_count_nb_edge_of_successor;
+}
 /***
 *operator=(const Cgraph &graph_to_copy) - set the value of a graph with equal operator
 *
