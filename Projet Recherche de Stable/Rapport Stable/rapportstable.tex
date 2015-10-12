@@ -11,7 +11,9 @@
 \title{Algorithme de recherche de stable}
 \begin{document}
 
-\section{Algorithme de base}
+\section{Algorithme}
+
+\paragraph{Algorithme de base}
 
 \begin{verbatim}
 Structure globale :
@@ -70,13 +72,42 @@ Si l'on s'intéresse à la connexité d'un graphe, on peut même aller plus loin
 \item Concernant le choix des sommets lors du parcours, on peut déjà avant même de travailler sur le graphe ordonner ses sommets par ordre croissant de nombre d'arêtes avec un tri rapide. Cela permet de parcourir en priorité les sommets qui ont un faible nombre d'arête, ce qui normalement permet d'obtenir une solution optimale plus rapidement. Cela revient à choisir le sommet ayant le nombre d'arête minimum à chaque fois dans l'ensemble des sommets restant. On pourrait aussi rajouter une règle faisant arrêter l'algorithme dès lors que l'on part d'un sommet ayant un nombre d'arêtes trop grand pour que l'on puisse tomber sur une solution qui soit optimale.\\\\
 \end{itemize}
 
-Lorsque l'on regarde l'ensemble des stables maximums pour un graphe donné, on s'aperçoit qu'un ensemble de sommets apparait à chaque fois dans ces solutions seuls certains sommets changent. Y a-il un moyen permettant de connaitre cette ensemble afin de trouver les solutions plus rapidement ?
-
-Ils nous reste à déterminer un algorithme afin de diviser un graphe en sous graphe connexe, nous avons commencé à regarder l'algorithme de tarjan (même si il ne s'applique que à des graphes orienté), nous nous intéressons aux différents types de décomposition d'un graphe (modulaire, cographe).
+\textit{Remarque :} Lorsque l'on regarde l'ensemble des stables maximums pour un graphe donné, on s'aperçoit qu'un ensemble de sommets apparait à chaque fois dans ces solutions seuls certains sommets changent. Y a-il un moyen permettant de connaitre cette ensemble afin de trouver les solutions plus rapidement ?
 
 \begin{figure}[h]
  \hspace{-4cm}
 \includegraphics[scale=1]{image1.png}
 \end{figure} 
+
+Ils nous reste à déterminer un algorithme afin de diviser un graphe en sous graphe connexe.
+
+Il existe deux notions liés à la connexité dans les graphes non orienté, à savoir les points d'articulation et les isthmes. Un point d'articulation est un sommet qui augmente le nombre de connexité si on l'enlève, un isthme est une arête ayant la même propriété. Ces deux notions pourraient nous permettre de divisé un graphe en sous partie connexe (on obtiendrait un graphe $k$-connexe).
+
+En cherchant rapidement, on trouve facilement un algorithme pour la recherche de point d'articulation celui-ci aurait une complexité en $O(nm)$ avec $n$ le nombre de sommet et $m$ le nombre d'arêtes. 
+
+La notion de communauté est aussi intéressante, une communauté étant un ensemble de nœuds ayant de nombreuse connexions entre eux mais ayant un très faible nombre de connexion vers l'extérieur.
+
+L'algorithme de Girvan-Newman permet de déterminer des communautés dans un graphe, sa complexité est assez forte $O(n^3)$ cependant cette complexité reste moindre par rapport à celle de notre algorithme (elle est en temps polynomial , notre algorithme ne l'est pas). Cela veut dire qu'il serait intéressant d'appliquer cet algorithme si on travaille sur des grandes instances.
+
+\section{Avancement dans le projet}
+
+Afin de pouvoir de pouvoir tester nos algorithme nous avons créé un graphe de test :
+
+\begin{figure}[h]
+ \hspace{-4cm}
+\includegraphics[scale=1]{exemplegraphe.png}
+\end{figure} 
+
+Nous avons pu alors tester notre algorithme de base afin d'obtenir les solutions suivantes :
+
+\begin{enumerate}
+\item ${1, 4, 8, 9, 11, 12}$
+\item ${1, 4, 6, 8, 11, 12 }$
+\item ${1, 4, 7, 8, 11, 12 }$
+\end{enumerate}
+
+Nous avons créé un algorithme plus rapide choisissant en priorité les sommets ayant le moins de d'arête.
+
+
 
 \end{document}

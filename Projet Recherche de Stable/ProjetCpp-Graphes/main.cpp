@@ -67,6 +67,8 @@ int main(int argc, char* argv[])
 	// Number of the operation chosen to do on run-time
 	unsigned int uiChooseOperation = 0;
 	unsigned int uiVerify = 1;
+	clock_t ctTime_exec = 0;
+
 	if (argc > 1 && argv[1] != NULL)
 	{
 		try
@@ -119,9 +121,17 @@ int main(int argc, char* argv[])
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
-				pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, new Cgraph());
+
+				ctTime_exec = clock();
+
+				pMax_inde_sets_table->MITenum_max_inde_set(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				pMax_inde_sets_table->GRTprint();
+
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}
@@ -132,9 +142,17 @@ int main(int argc, char* argv[])
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+
+				ctTime_exec = clock();
+
 				pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				pMax_inde_sets_table->GRTprint();
+
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}
@@ -145,9 +163,16 @@ int main(int argc, char* argv[])
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				ctTime_exec = clock();
+
 				pMax_inde_sets_table->MITenum_max_inde_set3(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				pMax_inde_sets_table->GRTprint();
+				
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}
@@ -158,9 +183,17 @@ int main(int argc, char* argv[])
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				
+				ctTime_exec = clock();
+
 				pMax_inde_sets_table->MITenum_max_inde_set4(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				pMax_inde_sets_table->GRTprint();
+				
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}
@@ -171,9 +204,17 @@ int main(int argc, char* argv[])
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+
+				ctTime_exec = clock();
+
 				pMax_inde_sets_table->MITenum_max_inde_set5(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				pMax_inde_sets_table->GRTprint();
+
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}

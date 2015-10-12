@@ -581,6 +581,7 @@ void Cgraph::GRAprint()
 {
 	for (unsigned int indexOfVertex = 0; indexOfVertex < uiGRAnb_vertex; indexOfVertex++){
 		printf("\n v : %d \n", GRAget_vertex(indexOfVertex)->VERget_id_vertex());
+		printf("\n nb edges : %d \n", GRAget_vertex(indexOfVertex)->VERget_nb_edges_in() + GRAget_vertex(indexOfVertex)->VERget_nb_edges_out());
 		for (unsigned int indexOfEdge = 0; indexOfEdge < ((GRAget_vertex(indexOfVertex)->VERget_nb_edges_out()>GRAget_vertex(indexOfVertex)->VERget_nb_edges_in()) ? GRAget_vertex(indexOfVertex)->VERget_nb_edges_out() : GRAget_vertex(indexOfVertex)->VERget_nb_edges_in()); indexOfEdge++){
 			if (indexOfEdge < GRAget_vertex(indexOfVertex)->VERget_nb_edges_out()){
 				printf(" -> v out : %d  ", GRAget_vertex(indexOfVertex)->VERget_list_edges_out()[indexOfEdge]->EDGget_id_vertex_in());
@@ -855,14 +856,25 @@ void Cgraph::GRAdelete_vertex_who_point(unsigned int uiVertex_id){
 *******************************************************************************/
 void Cgraph::GRAorder_by_degree(){
 
-	//Cvertex ** ppTable_Vertex = new Cvertex*[uiGRAnb_vertex];
+	for (unsigned int uiIndex = 0; uiIndex < uiGRAnb_vertex; uiIndex++)
+	{
+		unsigned uiIndex2 = uiIndex;
+		Cvertex * pVertex = ppGRAlist_vertex[uiIndex];
+		while (uiIndex2 > 0 && (ppGRAlist_vertex[uiIndex2 - 1]->VERget_nb_edges_in() + ppGRAlist_vertex[uiIndex2 - 1]->VERget_nb_edges_out()) > (pVertex->VERget_nb_edges_in() + pVertex->VERget_nb_edges_out())){
+			ppGRAlist_vertex[uiIndex2] = ppGRAlist_vertex[uiIndex2 - 1];
+			uiIndex2 = uiIndex2 - 1;
+		}
+		ppGRAlist_vertex[uiIndex2] = pVertex;
+	}
+}
+
+void Cgraph::GRAorder_by_id(){
 
 	for (unsigned int uiIndex = 0; uiIndex < uiGRAnb_vertex; uiIndex++)
 	{
 		unsigned uiIndex2 = uiIndex;
-		//Cvertex * pVertex = new Cvertex(*ppGRAlist_vertex[uiIndex]);
 		Cvertex * pVertex = ppGRAlist_vertex[uiIndex];
-		while (uiIndex2 > 0 && (ppGRAlist_vertex[uiIndex2 - 1]->VERget_nb_edges_in() + ppGRAlist_vertex[uiIndex2 - 1]->VERget_nb_edges_out()) > (pVertex->VERget_nb_edges_in() + pVertex->VERget_nb_edges_out())){
+		while (uiIndex2 > 0 && ppGRAlist_vertex[uiIndex2 - 1]->VERget_id_vertex() > pVertex->VERget_id_vertex()){
 			ppGRAlist_vertex[uiIndex2] = ppGRAlist_vertex[uiIndex2 - 1];
 			uiIndex2 = uiIndex2 - 1;
 		}
@@ -875,9 +887,13 @@ unsigned int Cgraph::GRAcount_nb_edge_of_successor(unsigned int uiIndex_vertex){
 	unsigned int uiNb_edges_of_successors = 0;
 	for (unsigned int uiIndex_succ = 0; uiIndex_succ < this->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_in(); uiIndex_succ++){
 		uiNb_edges_of_successors = uiNb_edges_of_successors + this->GRAget_vertex_from_vertex_id(this->GRAget_vertex(uiIndex_vertex)->VERget_list_edges_in()[uiIndex_succ]->EDGget_id_vertex_in())->VERget_nb_edges_in();
+		uiNb_edges_of_successors = uiNb_edges_of_successors + this->GRAget_vertex_from_vertex_id(this->GRAget_vertex(uiIndex_vertex)->VERget_list_edges_in()[uiIndex_succ]->EDGget_id_vertex_in())->VERget_nb_edges_out();
+
 	}
 	for (unsigned int uiIndex_succ = 0; uiIndex_succ < this->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_out(); uiIndex_succ++){
+		uiNb_edges_of_successors = uiNb_edges_of_successors + this->GRAget_vertex_from_vertex_id(this->GRAget_vertex(uiIndex_vertex)->VERget_list_edges_out()[uiIndex_succ]->EDGget_id_vertex_in())->VERget_nb_edges_in();
 		uiNb_edges_of_successors = uiNb_edges_of_successors + this->GRAget_vertex_from_vertex_id(this->GRAget_vertex(uiIndex_vertex)->VERget_list_edges_out()[uiIndex_succ]->EDGget_id_vertex_in())->VERget_nb_edges_out();
+
 	}
 	return uiNb_edges_of_successors;
 }

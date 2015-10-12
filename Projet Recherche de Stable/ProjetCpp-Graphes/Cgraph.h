@@ -473,6 +473,8 @@ public:
 	*******************************************************************************/
 	void GRAorder_by_degree();
 
+	void GRAorder_by_id();
+
 	unsigned int GRAcount_nb_edge_of_successor(unsigned int uiIndex_vertex);
 
 	unsigned int GRAget_max_nb_edge_of_successor();

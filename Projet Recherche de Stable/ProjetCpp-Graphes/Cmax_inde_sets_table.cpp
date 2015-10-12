@@ -88,7 +88,6 @@ void Cmax_inde_sets_table::GRTempty_table(){
 *******************************************************************************/
 void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets){
 	Cgraph * pGraph_copy = new Cgraph(*pGraph);
-
 	if (pGraph_copy->GRAget_nb_vertex() == 0){
 		if (pIndependant_sets->GRAget_nb_vertex() > uiMITsize_max){
 			this->GRTempty_table();
@@ -112,9 +111,9 @@ void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndep
 			pGraph_copy->GRAdelete_vertex_pointed_by(uiVertex_id);
 			pGraph_copy->GRAdelete_vertex_who_point(uiVertex_id);
 			pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
-			MITenum_max_inde_set(pGraph_copy,pIndependant_sets);//call the function on this new graph
+			MITenum_max_inde_set(pGraph_copy, pIndependant_sets);//call the function on this new graph
 			delete(pGraph_copy);//delete old copy who lack some vertices
-			pIndependant_sets = new Cgraph();//clean pIndependant_sets to start again... pIndependant_sets -> NULL
+			pIndependant_sets = new Cgraph();
 			pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
 		}
 	}
@@ -138,6 +137,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndep
 void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets){
 	Cgraph * pGraph_copy = new Cgraph(*pGraph);
 	pGraph_copy->GRAorder_by_degree();
+	Cgraph * pCopy_independant_sets = new Cgraph(*pIndependant_sets);
 
 	if (pGraph_copy->GRAget_nb_vertex() == 0){
 		if (pIndependant_sets->GRAget_nb_vertex() > uiMITsize_max){
@@ -157,14 +157,14 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 
 			Cvertex * pVertex = pGraph_copy->GRAget_vertex(uiIndex_vertex);// get the vertex at index
 			unsigned int uiVertex_id = pVertex->VERget_id_vertex();//get the id of the vertex
-			pIndependant_sets->GRAadd_vertex(new Cvertex(*pVertex));//add a copy of the vertex to the independant set
+			pCopy_independant_sets->GRAadd_vertex(new Cvertex(*pVertex));//add a copy of the vertex to the independant set
 			//remove all vertex who has a shared edge
 			pGraph_copy->GRAdelete_vertex_pointed_by(uiVertex_id);
 			pGraph_copy->GRAdelete_vertex_who_point(uiVertex_id);
 			pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
-			MITenum_max_inde_set2(pGraph_copy, pIndependant_sets);//call the function on this new graph
+			MITenum_max_inde_set2(pGraph_copy, pCopy_independant_sets);//call the function on this new graph
 			delete(pGraph_copy);//delete old copy who lack some vertices
-			pIndependant_sets = new Cgraph();//clean pIndependant_sets to start again... pIndependant_sets -> NULL
+			pCopy_independant_sets = new Cgraph(*pIndependant_sets);//get a new copy of the current independent set to be calculated
 			pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
 			pGraph_copy->GRAorder_by_degree();
 		}
@@ -189,6 +189,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 void Cmax_inde_sets_table::MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pIndependant_sets){
 	Cgraph * pGraph_copy = new Cgraph(*pGraph);
 	pGraph_copy->GRAorder_by_degree();
+	Cgraph * pCopy_independant_sets = new Cgraph(*pIndependant_sets);
 
 	/*
 	printf("\n\n \t\t Affichage du graphe entrée dans la fonction : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
@@ -202,39 +203,58 @@ void Cmax_inde_sets_table::MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pInde
 			this->uiMITsize_max = pIndependant_sets->GRAget_nb_vertex();
 		}
 		else if (pIndependant_sets->GRAget_nb_vertex() == this->uiMITsize_max){
-			this->GRTadd_graph(pIndependant_sets);
+
+			/*bool bSolution_exist = false;
+			for (unsigned int uiIndex = 0; uiIndex < this->GRTget_nb_graph(); uiIndex++){
+				pIndependant_sets->GRAorder_by_degree();
+				this->GRTget_graph(uiIndex)->GRAorder_by_degree();
+				if (*pIndependant_sets == *this->GRTget_graph(uiIndex)){
+					bSolution_exist = true;
+				}
+			}
+			if (bSolution_exist == false){*/
+				this->GRTadd_graph(pIndependant_sets);
+			/*}*/
 		}
 	}
 	else{
 		unsigned int uiMin_nb_edges = (pGraph_copy->GRAget_vertex(0)->VERget_nb_edges_out() + pGraph_copy->GRAget_vertex(0)->VERget_nb_edges_in());
 		unsigned int uiCurrent_nb_edges = uiMin_nb_edges;
+
+
 		/*browse the graph with index (position of vertex in the table) , index are different of vertex id
 		* vertex of index 1 is the first vertex in the table
 		*/
-		for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < pGraph_copy->GRAget_nb_vertex() && uiCurrent_nb_edges <= uiMin_nb_edges+4; uiIndex_vertex++){
+		for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < pGraph_copy->GRAget_nb_vertex() ; uiIndex_vertex++){
 
-			Cvertex * pVertex = pGraph_copy->GRAget_vertex(uiIndex_vertex);// get the vertex at index
-			unsigned int uiVertex_id = pVertex->VERget_id_vertex();//get the id of the vertex
-			pIndependant_sets->GRAadd_vertex(new Cvertex(*pVertex));//add a copy of the vertex to the independant set
-			//remove all vertex who has a shared edge
-			pGraph_copy->GRAdelete_vertex_pointed_by(uiVertex_id);
-			pGraph_copy->GRAdelete_vertex_who_point(uiVertex_id);
-			pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
-			MITenum_max_inde_set3(pGraph_copy, pIndependant_sets);//call the function on this new graph
-			delete(pGraph_copy);//delete old copy who lack some vertices
-			pIndependant_sets = new Cgraph();//clean pIndependant_sets to start again... pIndependant_sets -> NULL
-			pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
-			pGraph_copy->GRAorder_by_degree();
+			uiCurrent_nb_edges = (pGraph_copy->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_out() + pGraph_copy->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_in());
 
-			/*
-			printf("\n\n \t\t Affichage du graphe fin de boucle : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
-			pGraph_copy->GRAprint();
-			*/
-			
-			//calcul of the nb of edge of the next vertex
-			if (uiIndex_vertex < pGraph_copy->GRAget_nb_vertex()-1){
-				uiCurrent_nb_edges = (pGraph_copy->GRAget_vertex(uiIndex_vertex + 1)->VERget_nb_edges_out() + pGraph_copy->GRAget_vertex(uiIndex_vertex + 1)->VERget_nb_edges_in());
+			if (uiCurrent_nb_edges <= uiMin_nb_edges){
+
+				Cvertex * pVertex = pGraph_copy->GRAget_vertex(uiIndex_vertex);// get the vertex at index
+				unsigned int uiVertex_id = pVertex->VERget_id_vertex();//get the id of the vertex
+				pCopy_independant_sets->GRAadd_vertex(new Cvertex(*pVertex));//add a copy of the vertex to the independant set
+				//remove all vertex who has a shared edge
+				pGraph_copy->GRAdelete_vertex_pointed_by(uiVertex_id);
+				pGraph_copy->GRAdelete_vertex_who_point(uiVertex_id);
+				pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
+				MITenum_max_inde_set3(pGraph_copy, pCopy_independant_sets);//call the function on this new graph
+				delete(pGraph_copy);//delete old copy who lack some vertices
+				pCopy_independant_sets = new Cgraph(*pIndependant_sets);//get a new copy of the current independent set to be calculated
+				pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
+				pGraph_copy->GRAorder_by_degree();
+
+				/*
+				printf("\n\n \t\t Affichage du graphe fin de boucle : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
+				pGraph_copy->GRAprint();
+				*/
+
 			}
+			//calcul of the nb of edge of the next vertex
+			/*if (uiIndex_vertex < pGraph_copy->GRAget_nb_vertex()-1){
+				
+			}*/
+
 		}
 	}
 }
@@ -300,7 +320,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pInde
 				pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
 				MITenum_max_inde_set4(pGraph_copy, pIndependant_sets);//call the function on this new graph
 				delete(pGraph_copy);//delete old copy who lack some vertices
-				pIndependant_sets = new Cgraph();//clean pIndependant_sets to start again... pIndependant_sets -> NULL
+				pIndependant_sets->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the last vertex added 
 				pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
 				pGraph_copy->GRAorder_by_degree();
 
