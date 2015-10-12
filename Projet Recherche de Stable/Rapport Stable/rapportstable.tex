@@ -104,13 +104,18 @@ Nous avons pu alors tester notre algorithme de base afin d'obtenir les solutions
 \item ${1, 4, 8, 9, 11, 12}$
 \item ${1, 4, 6, 8, 11, 12 }$
 \item ${1, 4, 7, 8, 11, 12 }$
+\item ${1, 4, 6, 10, 11, 12 }$
+\item ${1, 4, 8, 9, 11, 12 }$
 \end{enumerate}
 
 Nous avons créé un algorithme plus rapide choisissant en priorité les sommets ayant le moins de d'arête.
 
-\subsection{Rapport 12/10/2015}
-
 Durant la semaine, nous avons corrigé un certain nombre de bugs liés à l'implémentation de notre premier algorithme.
+L'énumération de toutes les solutions est désormais complète. Dans le cas de notre graphe d'exemple, nous avons 5 solutions possédants 6 sommets, le nombre de combinaison des sommets est $6!$ ainsi notre premier algorithme trouve l'ensemble des combinaisons pour chaque solution soit 3600 $(=5*6!)$.
+
+Une version révisée de cet algorithme (version 2) permet d'éliminer un bon nombre de calculs en choisissant d'abord les sommets ayant le nombre minimum d'arêtes. Sur cette condition, on ne trouve malheureusement pas toutes les solutions (3 solutions sur les 5) mais l'algorithme est bien plus rapide (de l'ordre de 100 fois plus rapide). Cependant si l'on choisi les sommets ayant le nombre minimum d'arêtes+1, on trouve toutes les solutions (~10 fois plus rapide que l'algorithme 1) cependant nous avons toujours des solutions en double mais seulement 324 contrairement aux 3600 précédentes.
+
+La prochaine étape sera de regarder pour chaque sommet, en plus de son nombre d'arête (qui est minimum), regarder le nombre d'arêtes total de ses successeurs (qui devra être maximum).
 
 
 
