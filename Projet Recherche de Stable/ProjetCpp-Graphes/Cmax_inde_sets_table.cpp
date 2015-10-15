@@ -309,7 +309,16 @@ void Cmax_inde_sets_table::MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pInde
 *
 *******************************************************************************/
 void Cmax_inde_sets_table::MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pIndependant_sets){
-	printf("TODO");
+	Cgraph * pGraph_copy = new Cgraph(*pGraph);
+	pGraph_copy->GRAorder_by_degree();
+
+	unsigned int uiIndex_vertex = pGraph_copy->GRAget_nb_vertex() - 1;
+	while ((!pGraph_copy->GRAis_graph_only_compose_of_comunity()) && (uiIndex_vertex > 0)){
+		pGraph_copy->GRAremove_vertex_from_index(uiIndex_vertex);
+		uiIndex_vertex--;
+	}
+
+	pGraph_copy->GRAprint();
 }
 
 

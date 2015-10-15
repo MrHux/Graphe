@@ -475,6 +475,8 @@ public:
 
 	void GRAorder_by_id();
 
+	bool GRAis_graph_only_compose_of_comunity();
+
 	unsigned int GRAcount_nb_edge_of_successor(unsigned int uiIndex_vertex);
 
 	unsigned int GRAget_max_nb_edge_of_successor();

@@ -872,7 +872,7 @@ void Cgraph::GRAorder_by_id(){
 
 	for (unsigned int uiIndex = 0; uiIndex < uiGRAnb_vertex; uiIndex++)
 	{
-		unsigned uiIndex2 = uiIndex;
+		unsigned int uiIndex2 = uiIndex;
 		Cvertex * pVertex = ppGRAlist_vertex[uiIndex];
 		while (uiIndex2 > 0 && ppGRAlist_vertex[uiIndex2 - 1]->VERget_id_vertex() > pVertex->VERget_id_vertex()){
 			ppGRAlist_vertex[uiIndex2] = ppGRAlist_vertex[uiIndex2 - 1];
@@ -880,6 +880,51 @@ void Cgraph::GRAorder_by_id(){
 		}
 		ppGRAlist_vertex[uiIndex2] = pVertex;
 	}
+}
+
+bool Cgraph::GRAis_graph_only_compose_of_comunity(){
+
+	for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < uiGRAnb_vertex; uiIndex_vertex++)
+	{
+		unsigned int uiNb_edges_current_vertex = ppGRAlist_vertex[uiIndex_vertex]->VERget_nb_edges_in() + ppGRAlist_vertex[uiIndex_vertex]->VERget_nb_edges_out();
+		//if the vertex as no successor or predecessor
+		if (uiNb_edges_current_vertex == 0){
+
+		}
+		else{
+			unsigned int * pTable_pred_succ_vertex = ppGRAlist_vertex[uiIndex_vertex]->VERget_pred_succ();
+			//browse every successor and predecessor and see if they are linked to the same other vertex
+			for (unsigned int uiIndex_pred_succ = 0; uiIndex_pred_succ < uiNb_edges_current_vertex; uiIndex_pred_succ++)
+			{
+				//get the id of the predecessor or successor of the current vertex
+				unsigned int uiId_pred_succ = pTable_pred_succ_vertex[uiIndex_pred_succ];
+
+				//get the number of edges of this predecessor (or successor)
+				unsigned int uiNb_edges_pred_and_succ = GRAget_vertex_from_vertex_id(uiId_pred_succ)->VERget_nb_edges_in() + GRAget_vertex_from_vertex_id(uiId_pred_succ)->VERget_nb_edges_out();
+				//if the number of edges of the current vertex and the number of edges of his predecessor (or successor) are the same
+				if (uiNb_edges_pred_and_succ == uiNb_edges_current_vertex){
+					//get the table of predecessor and successor of the predecessor or successor
+					unsigned int * pTab_pred_succ_of_succ = GRAget_vertex_from_vertex_id(uiId_pred_succ)->VERget_pred_succ();
+					//if the table
+
+					for (unsigned int uiIndex = 0; uiIndex < uiNb_edges_pred_and_succ; uiIndex++){
+						if (pTable_pred_succ_vertex[uiIndex] != pTab_pred_succ_of_succ[uiIndex] 
+							&& (pTable_pred_succ_vertex[uiIndex]!=uiId_pred_succ || pTab_pred_succ_of_succ[uiIndex] != ppGRAlist_vertex[uiIndex_vertex]->VERget_id_vertex())){
+							if (pTable_pred_succ_vertex[uiIndex] != pTab_pred_succ_of_succ[uiIndex + 1] && pTable_pred_succ_vertex[uiIndex] != pTab_pred_succ_of_succ[uiIndex - 1]){
+								return false;
+							}
+						}
+					}
+				}
+				else{
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+
 }
 
 unsigned int Cgraph::GRAcount_nb_edge_of_successor(unsigned int uiIndex_vertex){

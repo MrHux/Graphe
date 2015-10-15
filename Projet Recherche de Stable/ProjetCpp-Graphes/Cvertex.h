@@ -382,6 +382,8 @@ public:
 	*******************************************************************************/
 	unsigned int VERget_nb_edges_in();
 
+	unsigned int * VERget_pred_succ();
+
 	/***
 	* operator=(const Cvertex &vertex_to_copy) - equal operator
 	*

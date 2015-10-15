@@ -687,6 +687,40 @@ unsigned int Cvertex::VERget_nb_edges_in()
 	return uiVERnb_edges_in;
 }
 
+unsigned int * Cvertex::VERget_pred_succ(){
+
+	unsigned int * pTab_pred_succ = new unsigned int[uiVERnb_edges_in + uiVERnb_edges_out];
+	unsigned int uiIndex_newtab = 0;
+
+	//fill the table with the id of the successor
+	for (unsigned int uiIndex_succ = 0; uiIndex_succ < uiVERnb_edges_out; uiIndex_succ++)
+	{
+		pTab_pred_succ[uiIndex_newtab] = ppVERlist_edges_out[uiIndex_succ]->EDGget_id_vertex_in();
+		uiIndex_newtab++;
+	}
+	//fill the table with the id of the predecessor
+	for (unsigned int uiIndex_pred = 0; uiIndex_pred < uiVERnb_edges_in; uiIndex_pred++)
+	{
+		pTab_pred_succ[uiIndex_newtab] = ppVERlist_edges_in[uiIndex_pred]->EDGget_id_vertex_in();
+		uiIndex_newtab++;
+	}
+
+	//sort the table
+	for (unsigned int uiIndex = 0; uiIndex < (uiVERnb_edges_in + uiVERnb_edges_out); uiIndex++)
+	{
+		unsigned int uiIndex2 = uiIndex;
+		unsigned int * pVertex = &pTab_pred_succ[uiIndex];
+		while (uiIndex2 > 0 && pTab_pred_succ[uiIndex2 - 1] > *pVertex){
+			pTab_pred_succ[uiIndex2] = pTab_pred_succ[uiIndex2 - 1];
+			uiIndex2 = uiIndex2 - 1;
+		}
+		pTab_pred_succ[uiIndex2] = *pVertex;
+	}
+
+	return pTab_pred_succ;
+
+}
+
 /***
 * operator=(const Cvertex &vertex_to_copy) - equal operator
 *
