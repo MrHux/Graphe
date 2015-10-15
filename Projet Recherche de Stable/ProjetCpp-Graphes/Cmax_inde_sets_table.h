@@ -84,10 +84,12 @@ public:
 	*
 	*******************************************************************************/
 	void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets);
-	
 	void MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets);
 	void MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pIndependant_sets);
 	void MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pIndependant_sets);
 	void MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pIndependant_sets);
+
+	bool MITtest_if_solution_exist(Cgraph * pGraph_to_compare);
+
 };
 
