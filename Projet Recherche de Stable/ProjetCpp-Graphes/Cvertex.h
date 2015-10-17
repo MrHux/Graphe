@@ -384,6 +384,8 @@ public:
 
 	unsigned int * VERget_pred_succ();
 
+	bool VERis_vertex_equivalent(Cvertex * pVertexToCompare);
+
 	/***
 	* operator=(const Cvertex &vertex_to_copy) - equal operator
 	*

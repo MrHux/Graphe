@@ -126,9 +126,10 @@ int main(int argc, char* argv[])
 
 				pMax_inde_sets_table->MITenum_max_inde_set(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				ctTime_exec = clock() - ctTime_exec;
+				
 				pMax_inde_sets_table->GRTprint();
 
-				ctTime_exec = clock() - ctTime_exec;
 				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
 				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
 
@@ -147,9 +148,10 @@ int main(int argc, char* argv[])
 
 				pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				ctTime_exec = clock() - ctTime_exec;
+				
 				pMax_inde_sets_table->GRTprint();
 
-				ctTime_exec = clock() - ctTime_exec;
 				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
 				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
 
@@ -167,9 +169,10 @@ int main(int argc, char* argv[])
 
 				pMax_inde_sets_table->MITenum_max_inde_set3(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
-				pMax_inde_sets_table->GRTprint();
-				
 				ctTime_exec = clock() - ctTime_exec;
+
+				pMax_inde_sets_table->GRTprint();
+						
 				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
 				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
 
@@ -182,7 +185,9 @@ int main(int argc, char* argv[])
 				printf(" ** Starting searching independant sets : ** \n");
 				printf(" **************************************** \n\n");
 
-				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+				printf("TODO !!");
+
+				/*Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
 				
 				ctTime_exec = clock();
 
@@ -195,7 +200,7 @@ int main(int argc, char* argv[])
 				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
 
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
-				uiChooseOperation = 100;
+				uiChooseOperation = 100;*/
 			}
 			// 1 - Search Independant sets
 			else if (uiChooseOperation == 5){
@@ -209,7 +214,7 @@ int main(int argc, char* argv[])
 
 				pMax_inde_sets_table->MITenum_max_inde_set5(pGraph, new Cgraph());
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
-				pMax_inde_sets_table->GRTprint();
+				//pMax_inde_sets_table->GRTprint();
 
 				ctTime_exec = clock() - ctTime_exec;
 				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;

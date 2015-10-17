@@ -721,6 +721,37 @@ unsigned int * Cvertex::VERget_pred_succ(){
 
 }
 
+
+bool Cvertex::VERis_vertex_equivalent(Cvertex * pVertexToCompare){
+
+	unsigned int * pTable_pred_succ_vertex = VERget_pred_succ();
+	//get the id of the predecessor or successor of the current vertex
+	unsigned int uiNbuiNb_edges_current_vertex = VERget_nb_edges_in() + VERget_nb_edges_out();
+
+	//get the number of edges of this predecessor (or successor)
+	unsigned int uiNb_edges_vertex_to_compare = pVertexToCompare->VERget_nb_edges_in() + pVertexToCompare->VERget_nb_edges_out();
+	//if the number of edges of the current vertex and the number of edges of his predecessor (or successor) are the same
+	if (uiNb_edges_vertex_to_compare == uiNbuiNb_edges_current_vertex){
+
+		unsigned int * pTab_pred_succ_of_vertex_to_compare = pVertexToCompare->VERget_pred_succ();
+
+		for (unsigned int uiIndex = 0; uiIndex < uiNb_edges_vertex_to_compare; uiIndex++){
+			if (pTable_pred_succ_vertex[uiIndex] != pTab_pred_succ_of_vertex_to_compare[uiIndex]
+				&& (pTable_pred_succ_vertex[uiIndex] != pVertexToCompare->VERget_id_vertex() || pTab_pred_succ_of_vertex_to_compare[uiIndex] != VERget_id_vertex())){
+				if (pTable_pred_succ_vertex[uiIndex] != pTab_pred_succ_of_vertex_to_compare[uiIndex + 1] && pTable_pred_succ_vertex[uiIndex] != pTab_pred_succ_of_vertex_to_compare[uiIndex - 1]){
+					return false;
+				}
+			}
+		}
+
+	}
+	else{
+		return false;
+	}
+
+	return true;
+}
+
 /***
 * operator=(const Cvertex &vertex_to_copy) - equal operator
 *
