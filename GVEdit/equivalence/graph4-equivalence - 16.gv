@@ -1,0 +1,35 @@
+graph G
+{
+6--1[color="#01B0F0", style=dashed];
+1--2[color="#01B0F0", style=dashed];
+1[color="#01B0F0", style="filled"];
+6--12 [color="#01B0F0", style=dashed];
+12--2[color="#01B0F0", style=dashed];
+12[color="#01B0F0", style="filled"];
+6--11[color="#01B0F0", style=dashed];
+11--2[color="#01B0F0", style=dashed];
+11[color="#01B0F0", style="filled"];
+6--7[color="#01B0F0", style=dashed];
+7--5[color="#01B0F0", style=dashed];
+6--8[color="#01B0F0", style=dashed];
+6[fontcolor=black, color=black];
+8--5[color="#01B0F0", style=dashed];
+2--3[color="#96CA2D", style=dashed];
+2--4[color="#96CA2D", style=dashed];
+2--5[color=black];
+2[fontcolor=black, color=black];
+5--4[color="#96CA2D", style=dashed];
+7 [color="#01B0F0", style="filled"];
+5 [fontcolor=black, color=black];
+8 [color="#01B0F0", style="filled"];
+3--4[style ="dotted, bold", color="#96CA2D"];
+3--9[style = "dotted, bold", color="#96CA2D"];
+3--10[style = "dotted, bold", color="#96CA2D"];
+4--10[style = "dotted, bold", color="#96CA2D"];
+4--9[style = "dotted, bold", color="#96CA2D"];
+9--10[style = "dotted, bold", color="#96CA2D"];
+3 [color="#96CA2D"][style = "filled"];
+4 [color= "#96CA2D"][style = "filled"];
+9 [color= "#96CA2D"][style = "filled"];
+10 [color= "#96CA2D"][style = "filled"];
+}

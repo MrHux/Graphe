@@ -1,0 +1,31 @@
+graph G
+{
+6--1[color=transparent];
+1--2[color=transparent];
+1[fontcolor=transparent, color=transparent];
+6--m_1 [color=transparent];
+m_1--2 [color=transparent];
+m_1 [fontcolor=transparent, color=transparent];
+6--11[color=transparent];
+11--2[color=transparent];
+11[fontcolor=transparent, color=transparent];
+6--7[color=transparent];
+7--5[style=dashed];
+6--8[color=transparent];
+6[fontcolor=transparent, color=transparent];
+8--5[style=dashed];
+2--3[color=transparent];
+2--4[color=transparent];
+2--5[color=transparent];
+2[fontcolor=transparent, color=transparent];
+5--4;
+3--4;
+3--9;
+3--10;
+4--10;
+4--9;
+9--10;
+7 [color=red, style=filled];
+8 [color=red, style=filled];
+
+}
