@@ -119,7 +119,6 @@ void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndep
 	}
 }
 
-
 /***
 * void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - search all the maximum independant sets of a graph
 *
@@ -233,7 +232,6 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 		}
 	}
 }
-
 
 
 /***

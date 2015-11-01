@@ -34,7 +34,7 @@ Cgraph::Cgraph() : Cgraph(NULL, 0)
 *******************************************************************************/
 Cgraph::Cgraph(Cvertex** ppList_vertex, unsigned int uiNb_vertex)
 {
-	if (ppList_vertex == NULL && uiNb_vertex != 0){
+	if ((ppList_vertex == NULL) && uiNb_vertex != 0){
 		Cexception exc(ERROR_NULL_LIST_NB_ELEMENT_NOT_NULL);
 		throw exc;
 	}
@@ -98,9 +98,6 @@ Cgraph::Cgraph(const char* pcFile_to_import) throw (Cexception)
 		if (strcmp(ppValues_imported[uiIndex_values_imported], CHARS_BEGIN_NUMBER_EDGES) == 0)
 		{
 			uiNumber_edges = atoi(ppValues_imported[uiIndex_values_imported + 1]);
-
-			// Allocating the table of edges
-			//edges_table = (Cedges **) malloc(uiNumber_edges * sizeof(Cedges *));
 		}
 
 		// Reading a table beginning character
@@ -231,6 +228,66 @@ Cgraph::Cgraph(const Cgraph &graph_to_copy)
 
 	}
 }
+
+
+/***
+* Cgraph(const Cgraph &graph_to_copy) - create a random Cgraph under certain condition
+*
+*Purpose:
+*       create a Random Cgraph with the specified number of vertex and edge could be oriented or not as wanted.
+*
+*Entry:
+*       unsigned int uiNb_vertex	-	the number of vertex
+*		bool bIs_oriented			-	the kind of graph oriented or not
+*
+*Return:
+*		nothing
+*
+*******************************************************************************/
+Cgraph::Cgraph(unsigned int uiNb_vertex, bool bIs_oriented, unsigned int iNb_edges){
+	
+
+	uiGRAnb_vertex = 0;
+	if (uiNb_vertex != 0){
+
+		ppGRAlist_vertex = new Cvertex*[uiNb_vertex];
+		for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < uiNb_vertex; uiIndex_vertex++){
+			GRAadd_vertex(new Cvertex(uiIndex_vertex, NULL, NULL, 0, 0));
+		}
+		uiGRAnb_vertex = uiNb_vertex;//set the new number of vertex
+
+		unsigned int uiNb_edges_to_distrib = iNb_edges;
+
+		if (uiNb_edges_to_distrib != 0){//if number of edge to set is 0 do nothing
+			
+			srand((unsigned int)time(0));
+
+			for (unsigned int indexOfVertex1 = 0; indexOfVertex1 < GRAget_nb_vertex(); indexOfVertex1++){
+				if (uiNb_edges_to_distrib > 0){
+
+					unsigned int uiRandom_nb_edges = (rand() % (uiNb_edges_to_distrib));
+					if (uiNb_edges_to_distrib == 1) uiRandom_nb_edges = 1;
+					uiNb_edges_to_distrib = uiNb_edges_to_distrib - uiRandom_nb_edges;
+					for (unsigned int indexOfEdges = 0; indexOfEdges < uiRandom_nb_edges; indexOfEdges++){
+						unsigned int indexOfVertex2 = rand() % (GRAget_nb_vertex());//index begin by 0
+						if (indexOfVertex2 == indexOfVertex1){
+							if(indexOfVertex2 == 0)indexOfVertex2++;//don't link a vertex with himself
+							else indexOfVertex2--;
+						}
+						if (GRAadd_edge_from_index(indexOfVertex1, indexOfVertex2)){//link every vertex with all other vertex
+							uiRandom_nb_edges++;// if the edge was already existing we increment the count (to have the wanted amount of edge) 
+						}
+					}
+				}
+			}
+		}
+
+	}
+	else{
+		ppGRAlist_vertex = NULL;
+	}
+
+ }
 
 /***
 * Cgraph~() - delete a Cgraph correctly
@@ -386,6 +443,20 @@ throw an exception if the index is higher than the number of vertex in the graph
 Cvertex * Cgraph::GRAget_vertex_from_vertex_id(unsigned int uiVertex_id){
 	return GRAget_vertex(GRAget_index_vertex(uiVertex_id));
 }
+
+
+unsigned int Cgraph::GRAget_nb_edges(){
+	unsigned int uiNb_edges = 0;
+
+	if (uiGRAnb_vertex != 0){
+		for (unsigned int uiIndex =0; uiIndex < uiGRAnb_vertex; uiIndex++){
+			uiNb_edges = uiNb_edges + ppGRAlist_vertex[uiIndex]->VERget_nb_edges_in();
+		}
+	}
+
+	return uiNb_edges;
+}
+
 
 /***
 * GRAadd_vertex(Cvertex* pVertex) - add a vertex to the graph
@@ -672,13 +743,13 @@ void Cgraph::GRAupdate_edge_from_index(unsigned int uiIndex_vertex_out, unsigned
 *		unsigned int	uiIndex_vertex_in	-	the index (in the list of the graph) of the vertex in exit of the edge
 *
 *Return:
-*		none
+*		bool	-	a boolean if the edge was already there
 *
 *Throw:
 *		Throw an error if the value of the index are out of range of number of edge
 *
 *******************************************************************************/
-void Cgraph::GRAadd_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in)
+bool Cgraph::GRAadd_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in)
 {
 	if (uiIndex_vertex_out > uiGRAnb_vertex || uiIndex_vertex_in > uiGRAnb_vertex){
 		Cexception exc(ERROR_INDEX_OUT_OF_BOUND);
@@ -689,8 +760,12 @@ void Cgraph::GRAadd_edge_from_index(unsigned int uiIndex_vertex_out, unsigned in
 		unsigned int uiIdOfVertexIn = ppGRAlist_vertex[uiIndex_vertex_in]->VERget_id_vertex();
 		Cedges * newEdgeForVertexOut = new Cedges(uiIdOfVertexIn);
 		Cedges * newEdgeForVertexIn = new Cedges(uiIdOfVertexOut);
-		ppGRAlist_vertex[uiIndex_vertex_out]->VERadd_edge_to_list_edges_out(newEdgeForVertexOut);
-		ppGRAlist_vertex[uiIndex_vertex_in]->VERadd_edge_to_list_edges_in(newEdgeForVertexIn);
+		unsigned int uiIndex_edge_inserted_out = ppGRAlist_vertex[uiIndex_vertex_out]->VERadd_edge_to_list_edges_out(newEdgeForVertexOut);
+		unsigned int uiIndex_edge_inserted_in = ppGRAlist_vertex[uiIndex_vertex_in]->VERadd_edge_to_list_edges_in(newEdgeForVertexIn);
+		bool bIs_edge_not_existing = uiIndex_edge_inserted_out == (ppGRAlist_vertex[uiIndex_vertex_out]->VERget_nb_edges_out()-1);
+		bIs_edge_not_existing = bIs_edge_not_existing && (uiIndex_edge_inserted_in == (ppGRAlist_vertex[uiIndex_vertex_in]->VERget_nb_edges_in()-1));
+		
+		return !bIs_edge_not_existing;
 	}
 }
 
@@ -749,14 +824,14 @@ void Cgraph::GRAupdate_edge_from_vertex_id(unsigned int uiId_vertex_out, unsigne
 *		unsigned int	uiIndex_vertex_in	-	the id of the vertex in exit of the edge
 *
 *Return:
-*		none
+*		bool	-	a boolean if the edge was already there
 *
 *Throw:
 *		Throw an error if the value of the index are out of range of number of edge
 *
 *******************************************************************************/
-void Cgraph::GRAadd_edge_from_vertex_id(unsigned int uiId_vertex_out, unsigned int uiId_vertex_in){
-	GRAadd_edge_from_index(GRAget_index_vertex(uiId_vertex_out), GRAget_index_vertex(uiId_vertex_in));
+bool Cgraph::GRAadd_edge_from_vertex_id(unsigned int uiId_vertex_out, unsigned int uiId_vertex_in){
+	return GRAadd_edge_from_index(GRAget_index_vertex(uiId_vertex_out), GRAget_index_vertex(uiId_vertex_in));
 }
 
 /***
@@ -950,10 +1025,12 @@ unsigned int Cgraph::GRAget_max_nb_edge_of_successor(){
 	unsigned int uiCurrent_count = 0;
 	for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < GRAget_nb_vertex() ; uiIndex_vertex++)
 	{
-		uiCurrent_count = GRAcount_nb_edge_of_successor(uiIndex_vertex);
+		uiCurrent_count = GRAcount_nb_edge_of_successor(uiIndex_vertex);//number of edge of the successor of the current vertex
 
-		uiNb_edges = GRAget_vertex(0)->VERget_nb_edges_out() + GRAget_vertex(0)->VERget_nb_edges_in();
+		uiNb_edges = GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_out() + GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_in();//number of edge of the current vertex
+
 		if (uiNb_edges == 0)uiNb_edges = 1;
+
 		if (uiMax_count_nb_edge_of_successor < (uiCurrent_count/uiNb_edges)){
 			uiMax_count_nb_edge_of_successor = uiCurrent_count / uiNb_edges;
 		}

@@ -522,7 +522,7 @@ Cedges * Cvertex::VERremove_edge_from_list_edges_in(Cedges * pEdge_to_delete){
 unsigned int Cvertex::VERfind_index_in_list_edge_out(Cedges * pEdge_to_find){
 	if (ppVERlist_edges_out != NULL && uiVERnb_edges_out != 0){
 		for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_out; indexOfEdge++){
-			if (*pEdge_to_find == *ppVERlist_edges_out[indexOfEdge]){
+			if (pEdge_to_find->EDGget_id_vertex_in() == ppVERlist_edges_out[indexOfEdge]->EDGget_id_vertex_in()){
 				return indexOfEdge;
 			}
 		}
@@ -547,7 +547,7 @@ unsigned int Cvertex::VERfind_index_in_list_edge_out(Cedges * pEdge_to_find){
 unsigned int Cvertex::VERfind_index_in_list_edge_in(Cedges * pEdge_to_find){
 	if (ppVERlist_edges_in != NULL && uiVERnb_edges_in != 0){
 		for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_in; indexOfEdge++){
-			if (*pEdge_to_find == *ppVERlist_edges_in[indexOfEdge]){
+			if (pEdge_to_find->EDGget_id_vertex_in() == ppVERlist_edges_in[indexOfEdge]->EDGget_id_vertex_in()){
 				return indexOfEdge;
 			}
 		}

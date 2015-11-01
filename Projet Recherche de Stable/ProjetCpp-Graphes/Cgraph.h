@@ -82,6 +82,22 @@ public:
 	Cgraph(const Cgraph &graph_to_copy);
 
 	/***
+	* Cgraph(const Cgraph &graph_to_copy) - create a random Cgraph under certain condition
+	*
+	*Purpose:
+	*       create a Random Cgraph with the specified number of vertex and edge could be oriented or not as wanted.
+	*
+	*Entry:
+	*       unsigned int uiNb_vertex	-	the number of vertex
+	*		bool bIs_oriented			-	the kind of graph oriented or not
+	*
+	*Return:
+	*		nothing
+	*
+	*******************************************************************************/
+	explicit Cgraph(unsigned int uiNb_vertex, bool bIs_oriented, unsigned int iNb_edges);
+
+	/***
 	* Cgraph~() - delete a Cgraph correctly
 	*
 	*Purpose:
@@ -94,6 +110,7 @@ public:
 	*		nothing
 	*
 	*******************************************************************************/
+
 	~Cgraph();
 
 	/***
@@ -189,6 +206,8 @@ public:
 	*******************************************************************************/
 	Cvertex * GRAget_vertex_from_vertex_id(unsigned int uiVertex_id);
 
+	unsigned int GRAget_nb_edges();
+
 	/***
 	* GRAadd_vertex(Cvertex* pVertex) - add a vertex to the graph
 	*
@@ -202,6 +221,9 @@ public:
 	*		unsigned int	-	the position of the vertex
 	*
 	*******************************************************************************/
+
+	
+
 	unsigned int GRAadd_vertex(Cvertex* pVertex);
 
 	/***
@@ -346,13 +368,13 @@ public:
 	*		unsigned int	uiIndex_vertex_in	-	the index (in the list of the graph) of the vertex in exit of the edge
 	*
 	*Return:
-	*		none
+	*		bool	-	a boolean if the edge was already there
 	*
 	*Throw:
 	*		Throw an error if the value of the index are out of range of number of edge
 	*
 	*******************************************************************************/
-	void GRAadd_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in);
+	bool GRAadd_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in);
 
 	/***
 	*GRAremove_edge_from_vertex_id(unsigned int uiId_vertex_out, unsigned int uiId_vertex_in) - remove an edge in the graph
@@ -405,13 +427,13 @@ public:
 	*		unsigned int	uiIndex_vertex_in	-	the id of the vertex in exit of the edge
 	*
 	*Return:
-	*		none
+	*		bool	-	a boolean if the edge was already there
 	*
 	*Throw:
 	*		Throw an error if the value of the index are out of range of number of edge
 	*
 	*******************************************************************************/
-	void GRAadd_edge_from_vertex_id(unsigned int uiId_vertex_out, unsigned int uiId_vertex_in);
+	bool GRAadd_edge_from_vertex_id(unsigned int uiId_vertex_out, unsigned int uiId_vertex_in);
 
 	/***
 	*GRAinvert_all_edges()	- invert all edges in the graph

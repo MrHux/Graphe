@@ -14,6 +14,15 @@ public:
 
 	static void TEST_UNIT_GRAorder_by_degree();
 
+	static void TEST_UNIT_GRAdelete_vertex_pointed_by();
+	
+	static void TEST_UNIT_GRAdelete_vertex_who_point();
+
+	static void TEST_UNIT_GRAis_graph_only_compose_of_comunity();
+
+	static void TEST_UNIT_GRAcount_nb_edge_of_successor();
+
+	static void TEST_UNIT_GRAget_max_nb_edge_of_successor();
 };
 #endif
 #endif
