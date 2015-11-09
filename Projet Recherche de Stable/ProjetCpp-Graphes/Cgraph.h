@@ -129,6 +129,21 @@ public:
 	unsigned int GRAget_nb_vertex();
 
 	/***
+	* GRAget_nb_edges() - get the number of edges of the graph
+	*
+	*Purpose:
+	*       get the number of edges of the graph
+	*
+	*Entry:
+	*       none
+	*
+	*Return:
+	*		nothing
+	*
+	*******************************************************************************/
+	unsigned int GRAget_nb_edges();
+
+	/***
 	* GRAget_vertices() - get the list of vertex of the graph
 	*
 	*Purpose:
@@ -205,8 +220,6 @@ public:
 	*
 	*******************************************************************************/
 	Cvertex * GRAget_vertex_from_vertex_id(unsigned int uiVertex_id);
-
-	unsigned int GRAget_nb_edges();
 
 	/***
 	* GRAadd_vertex(Cvertex* pVertex) - add a vertex to the graph

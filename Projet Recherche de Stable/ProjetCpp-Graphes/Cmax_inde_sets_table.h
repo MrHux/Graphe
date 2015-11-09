@@ -87,7 +87,9 @@ public:
 	void MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets);
 	void MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pIndependant_sets);
 	void MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pIndependant_sets);
-	void MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pIndependant_sets);
+	void MITenum_max_inde_set5(Cgraph * pGraph);
+	void MITenum_max_inde_set6(Cgraph * pGraph, unsigned int uiIndex_current_vertex);
+
 
 	bool MITtest_if_solution_exist(Cgraph * pGraph_to_compare);
 

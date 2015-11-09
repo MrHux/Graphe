@@ -134,7 +134,8 @@ void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndep
 *		nothing
 *
 *******************************************************************************/
-void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets) {
+void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets){
+	printf("TODO");
 	//printf("TODO");
 	//valerian
 	// "regarder si il y a des sommets equivalents"
@@ -142,95 +143,40 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 	//cad les sommets qui quand ils sont enleves enlevent les memes autres sommets que qu'un autre.
 	//ex :
 	//	 /---\
-			//	1--2--3
-//	 \ | / 
-//	   5
-// ici retirer 1, 2, 3 ou 5, c'est pareil !!
+				//	1--2--3
+	//	 \ | / 
+	//	   5
+	// ici retirer 1, 2, 3 ou 5, c'est pareil !!
 
-//ex :
-//		 /---\
-		//	    1--2--3
-//		|\ | /
-//		6--5--7
-// ici retirer 2 ou 3, c'est pareil !!
+	//ex :
+	//		 /---\
+			//	    1--2--3
+	//		|\ | /
+	//		6--5--7
+	// ici retirer 2 ou 3, c'est pareil !!
 
-//on va distinguer deux types de groupes:
-//	1: groupe d'exclusion/connexes/communaute
-//		si 1 sommet du groupe est pris alors on doit exclure tous les autres.
-//		Les solutions sont donc obtenue avec un remplacement de ce sommet par ceux du groupe a k sommets ( ==> k solutions diferentes)
-//	2: groupe de complementaires/parallelles
-//		si 1 sommet du groupe est pris, alors autant prendre tous les autres.
-//		On ajoute alors tous le groupe de k sommets a la solution ( ==> solution unique)
+	//on va distinguer deux types de groupes:
+	//	1: groupe d'exclusion/connexes/communaute
+	//		si 1 sommet du groupe est pris alors on doit exclure tous les autres.
+	//		Les solutions sont donc obtenue avec un remplacement de ce sommet par ceux du groupe a k sommets ( ==> k solutions diferentes)
+	//	2: groupe de complementaires/parallelles
+	//		si 1 sommet du groupe est pris, alors autant prendre tous les autres.
+	//		On ajoute alors tous le groupe de k sommets a la solution ( ==> solution unique)
 
-/*============== ALGORITHM ==============
-* get the vertex to delete (min direct successors && max undirect successors) : V_delete
-*	list of V_delete's successors : L1
-*	for each element of L1
-*		get the list of vertex's successors : L2
-*		for each element of L2
-*			get the list of vertex's successors : L3
-*			if(L1 == L3)
-*				parrallel communauty
-*			else if((areLinked(V_delete, V_curent) == true) && (L1\link == L3\link)
-*				fortement connexe communauty
-*/
-
-
-
-	Cgraph * pGraph_copy = new Cgraph(*pGraph);
-	pGraph_copy->GRAorder_by_degree();
-	Cgraph * pCopy_independant_sets = new Cgraph(*pIndependant_sets);
-
-	/*
-	printf("\n\n \t\t Affichage du graphe entrée dans la fonction : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
-	pGraph_copy->GRAprint();
+	/*============== ALGORITHM ==============
+	* get the vertex to delete (min direct successors && max undirect successors) : V_delete
+	*	list of V_delete's successors : L1
+	*	for each element of L1
+	*		get the list of vertex's successors : L2
+	*		for each element of L2
+	*			get the list of vertex's successors : L3
+	*			if(L1 == L3)
+	*				parrallel communauty
+	*			else if((areLinked(V_delete, V_curent) == true) && (L1\link == L3\link)
+	*				fortement connexe communauty
 	*/
 
-	if (pGraph_copy->GRAget_nb_vertex() == 0) {
-		if (pIndependant_sets->GRAget_nb_vertex() > uiMITsize_max) {
-			this->GRTempty_table();
-			this->GRTadd_graph(pIndependant_sets);
-			this->uiMITsize_max = pIndependant_sets->GRAget_nb_vertex();
-		}
-		else if (pIndependant_sets->GRAget_nb_vertex() == this->uiMITsize_max) {
-			pIndependant_sets->GRAorder_by_id();
-			bool bSolution_exist = this->MITtest_if_solution_exist(pIndependant_sets);
-			if (bSolution_exist == false) {
-				this->GRTadd_graph(pIndependant_sets);
-			}
-		}
-	}
-	else {
-		unsigned int uiMin_nb_edges = (pGraph_copy->GRAget_vertex(0)->VERget_nb_edges_out() + pGraph_copy->GRAget_vertex(0)->VERget_nb_edges_in());
-		unsigned int uiCurrent_nb_edges = uiMin_nb_edges;
 
-
-		/*browse the graph with index (position of vertex in the table) , index are different of vertex id
-		* vertex of index 1 is the first vertex in the table
-		*/
-		for (unsigned int uiIndex_vertex = 0; uiIndex_vertex < pGraph_copy->GRAget_nb_vertex(); uiIndex_vertex++) {
-
-			uiCurrent_nb_edges = (pGraph_copy->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_out() + pGraph_copy->GRAget_vertex(uiIndex_vertex)->VERget_nb_edges_in());
-
-			if (uiCurrent_nb_edges <= uiMin_nb_edges + 1) {
-
-				Cvertex * pVertex = pGraph_copy->GRAget_vertex(uiIndex_vertex);// get the vertex at index
-				unsigned int uiVertex_id = pVertex->VERget_id_vertex();//get the id of the vertex
-				pCopy_independant_sets->GRAadd_vertex(new Cvertex(*pVertex));//add a copy of the vertex to the independant set
-																			 //remove all vertex who has a shared edge
-				pGraph_copy->GRAdelete_vertex_pointed_by(uiVertex_id);
-				pGraph_copy->GRAdelete_vertex_who_point(uiVertex_id);
-				pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
-				MITenum_max_inde_set2(pGraph_copy, pCopy_independant_sets);//call the function on this new graph
-				delete(pGraph_copy);//delete old copy who lack some vertices
-				pCopy_independant_sets = new Cgraph(*pIndependant_sets);//get a new copy of the current independent set to be calculated
-				pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
-				pGraph_copy->GRAorder_by_degree();
-
-			}
-
-		}
-	}
 }
 
 
@@ -256,6 +202,8 @@ void Cmax_inde_sets_table::MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pInde
 	/*
 	printf("\n\n \t\t Affichage du graphe entrée dans la fonction : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
 	pGraph_copy->GRAprint();
+
+	ICI on cherche les solutions en ajoutant à une solution le sommet avec le moins d'arête en priorité, on s'arête des lors que les sommets à parcourir on un nombre d'arête > au nombre minimum + 2
 	*/
 
 	if (pGraph_copy->GRAget_nb_vertex() == 0){
@@ -310,7 +258,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set3(Cgraph * pGraph, Cgraph * pInde
 *
 *Purpose:
 *       search all the maximum independant sets of a graph
-*
+*		
 *Entry:
 *       Cgraph * pGraph				-		a graph , to determine independant sets
 *		Cgraph * pIndependant_sets	-		an independant set of the graph, NULL if first call of the function.
@@ -323,11 +271,17 @@ void Cmax_inde_sets_table::MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pInde
 	Cgraph * pGraph_copy = new Cgraph(*pGraph);
 	pGraph_copy->GRAorder_by_degree();
 
+	
+
 	/*
 	printf("\n\n \t\t Affichage du graphe entrée dans la fonction : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
 	pGraph_copy->GRAprint();
+
+	ICI on cherche à calculer toute les solutions en ajoutant aux solutions les sommets qui ont le moins d'arête et dont leur successeur on le plus d'arête
 	*/
 
+	/**ATTENTION ERREUR ICI pIndependant_sets N'EST JAMAIS REALLOUER !!! **/
+	
 	if (pGraph_copy->GRAget_nb_vertex() == 0){
 		if (pIndependant_sets->GRAget_nb_vertex() > uiMITsize_max){
 			this->GRTempty_table();
@@ -393,7 +347,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pInde
 * void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - search all the maximum independant sets of a graph
 *
 *Purpose:
-*       search all the maximum independant sets of a graph
+*       search the Stable maximum of a graph, by removing the vertex with the higher number of egdes
 *
 *Entry:
 *       Cgraph * pGraph				-		a graph , to determine independant sets
@@ -403,7 +357,7 @@ void Cmax_inde_sets_table::MITenum_max_inde_set4(Cgraph * pGraph, Cgraph * pInde
 *		nothing
 *
 *******************************************************************************/
-void Cmax_inde_sets_table::MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pIndependant_sets){
+void Cmax_inde_sets_table::MITenum_max_inde_set5(Cgraph * pGraph){
 	Cgraph * pGraph_copy = new Cgraph(*pGraph);
 	pGraph_copy->GRAorder_by_degree();
 
@@ -414,6 +368,47 @@ void Cmax_inde_sets_table::MITenum_max_inde_set5(Cgraph * pGraph, Cgraph * pInde
 	}
 
 	pGraph_copy->GRAprint();
+}
+
+
+/***
+* void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - search all the maximum independant sets of a graph
+*
+*Purpose:
+*       search the Stable maximum of a graph, by enumering all the combinaison
+*
+*Entry:
+*       Cgraph * pGraph				-		a graph , to determine independant sets
+*		Cgraph * pIndependant_sets	-		an independant set of the graph, NULL if first call of the function.
+*
+*Return:
+*		nothing
+*
+*******************************************************************************/
+void Cmax_inde_sets_table::MITenum_max_inde_set6(Cgraph * pGraph, unsigned int uiIndex_current_vertex){
+	
+	Cgraph * pGraph_Copy = new Cgraph(*pGraph);
+
+	if (pGraph_Copy->GRAget_nb_edges() == 0){
+		if (pGraph_Copy->GRAget_nb_vertex() > uiMITsize_max){
+			this->GRTempty_table();
+			this->GRTadd_graph(new Cgraph(*pGraph_Copy));//ajouter la combinaison trouver
+			this->uiMITsize_max = pGraph_Copy->GRAget_nb_vertex();
+		}
+		else if (pGraph_Copy->GRAget_nb_vertex() == this->uiMITsize_max){
+			this->GRTadd_graph(new Cgraph(*pGraph_Copy));//ajouter la combinaison trouver
+		}
+	}
+
+	for (unsigned int uiIndex_vertex = 0 + uiIndex_current_vertex; uiIndex_vertex < pGraph_Copy->GRAget_nb_vertex(); uiIndex_vertex++){
+
+		pGraph_Copy->GRAremove_vertex_from_index(uiIndex_vertex);//suppression du sommet ajouter
+
+		MITenum_max_inde_set6(pGraph_Copy, uiIndex_vertex);//appel recursif
+
+		delete(pGraph_Copy);
+		pGraph_Copy = new Cgraph(*pGraph);//retour au graph d'origine
+	}
 }
 
 

@@ -78,9 +78,8 @@ void Cgraph_UNIT::TEST_UNIT_Cgraph()
 	pGraph6->GRAprint();
 
 	assert(pGraph6->GRAget_nb_vertex() == 10);
-
-	assert(pGraph6->GRAget_nb_edges() < 10);/// bizarre ...
-
+	printf("%d",pGraph6->GRAget_nb_edges());
+	assert(pGraph6->GRAget_nb_edges() == 10);
 
 	delete pGraph6;
 }

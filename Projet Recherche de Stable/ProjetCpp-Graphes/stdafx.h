@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <time.h> 
+#include <ctime>
 
 #include <climits>
 #include <cstring>

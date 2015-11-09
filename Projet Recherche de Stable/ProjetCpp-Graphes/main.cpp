@@ -102,7 +102,8 @@ int main(int argc, char* argv[])
 			std::cout << "3 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 3" << std::endl;
 			std::cout << "4 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 4" << std::endl;
 			std::cout << "5 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
-			std::cout << "6 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
+			std::cout << "6 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
+			std::cout << "7 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
 			std::cout << "10 - Quitter" << std::endl << std::endl;
 
 			std::cout << "Choix : ";
@@ -212,7 +213,7 @@ int main(int argc, char* argv[])
 
 				ctTime_exec = clock();
 
-				pMax_inde_sets_table->MITenum_max_inde_set5(pGraph, new Cgraph());
+				pMax_inde_sets_table->MITenum_max_inde_set5(pGraph);
 				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
 				//pMax_inde_sets_table->GRTprint();
 
@@ -223,8 +224,30 @@ int main(int argc, char* argv[])
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}
+
+			// 6 - Search Independant sets
+			else if (uiChooseOperation == 6){
+				printf("\n ****************************************\n");
+				printf(" ** Starting searching independant sets : ** \n");
+				printf(" **************************************** \n\n");
+
+				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+
+				ctTime_exec = clock();
+
+				pMax_inde_sets_table->MITenum_max_inde_set6(pGraph, 0);
+				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
+				pMax_inde_sets_table->GRTprint();
+
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
+				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
+			}
 			// 2 - Invert graph
-			else if (uiChooseOperation == 6)
+			else if (uiChooseOperation == 7)
 			{
 				printf("\n ****************************************\n");
 				printf(" ** Starting creation inverted graph : ** \n");
@@ -244,7 +267,7 @@ int main(int argc, char* argv[])
 				uiChooseOperation = 100;
 			}
 			// 3 - Quit
-			else if (uiChooseOperation == 7){
+			else if (uiChooseOperation == 10){
 				uiChooseOperation = 100;
 				break;
 			}

@@ -268,14 +268,15 @@ Cgraph::Cgraph(unsigned int uiNb_vertex, bool bIs_oriented, unsigned int iNb_edg
 					unsigned int uiRandom_nb_edges = (rand() % (uiNb_edges_to_distrib));
 					if (uiNb_edges_to_distrib == 1) uiRandom_nb_edges = 1;
 					uiNb_edges_to_distrib = uiNb_edges_to_distrib - uiRandom_nb_edges;
+
+
 					for (unsigned int indexOfEdges = 0; indexOfEdges < uiRandom_nb_edges; indexOfEdges++){
-						unsigned int indexOfVertex2 = rand() % (GRAget_nb_vertex());//index begin by 0
-						if (indexOfVertex2 == indexOfVertex1){
-							if(indexOfVertex2 == 0)indexOfVertex2++;//don't link a vertex with himself
-							else indexOfVertex2--;
+						unsigned int indexOfVertex2 = indexOfVertex1;
+						while (indexOfVertex2 == indexOfVertex1){
+							indexOfVertex2 = rand() % (GRAget_nb_vertex());//index begin by 0
 						}
 						if (GRAadd_edge_from_index(indexOfVertex1, indexOfVertex2)){//link every vertex with all other vertex
-							uiRandom_nb_edges++;// if the edge was already existing we increment the count (to have the wanted amount of edge) 
+							indexOfEdges--;// if the edge was already existing we increment the count (to have the wanted amount of edge) 
 						}
 					}
 				}
@@ -760,10 +761,11 @@ bool Cgraph::GRAadd_edge_from_index(unsigned int uiIndex_vertex_out, unsigned in
 		unsigned int uiIdOfVertexIn = ppGRAlist_vertex[uiIndex_vertex_in]->VERget_id_vertex();
 		Cedges * newEdgeForVertexOut = new Cedges(uiIdOfVertexIn);
 		Cedges * newEdgeForVertexIn = new Cedges(uiIdOfVertexOut);
+		unsigned int uiNb_edges_in_old = ppGRAlist_vertex[uiIndex_vertex_in]->VERget_nb_edges_in();
+		unsigned int uiNb_edges_out_old = ppGRAlist_vertex[uiIndex_vertex_out]->VERget_nb_edges_out();
 		unsigned int uiIndex_edge_inserted_out = ppGRAlist_vertex[uiIndex_vertex_out]->VERadd_edge_to_list_edges_out(newEdgeForVertexOut);
 		unsigned int uiIndex_edge_inserted_in = ppGRAlist_vertex[uiIndex_vertex_in]->VERadd_edge_to_list_edges_in(newEdgeForVertexIn);
-		bool bIs_edge_not_existing = uiIndex_edge_inserted_out == (ppGRAlist_vertex[uiIndex_vertex_out]->VERget_nb_edges_out()-1);
-		bIs_edge_not_existing = bIs_edge_not_existing && (uiIndex_edge_inserted_in == (ppGRAlist_vertex[uiIndex_vertex_in]->VERget_nb_edges_in()-1));
+		bool bIs_edge_not_existing = (ppGRAlist_vertex[uiIndex_vertex_out]->VERget_nb_edges_out() != uiNb_edges_out_old) && (ppGRAlist_vertex[uiIndex_vertex_in]->VERget_nb_edges_in() != uiNb_edges_in_old);
 		
 		return !bIs_edge_not_existing;
 	}
