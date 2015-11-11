@@ -103,7 +103,8 @@ int main(int argc, char* argv[])
 			std::cout << "4 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 4" << std::endl;
 			std::cout << "5 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
 			std::cout << "6 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
-			std::cout << "7 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
+			std::cout << "7 - Trouver un unique ensemble maximum ind\x082pendant de sommets version 7 - heuristique gloutonne" << std::endl;
+			std::cout << "8 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
 			std::cout << "10 - Quitter" << std::endl << std::endl;
 
 			std::cout << "Choix : ";
@@ -118,7 +119,7 @@ int main(int argc, char* argv[])
 			// 1 - Search Independant sets
 			else if (uiChooseOperation == 1){
 				printf("\n ****************************************\n");
-				printf(" ** Starting searching independant sets : ** \n");
+				printf(" ** Starting searching independant sets 1 : ** \n");
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
@@ -140,7 +141,7 @@ int main(int argc, char* argv[])
 			// 1 - Search Independant sets
 			else if (uiChooseOperation == 2){
 				printf("\n ****************************************\n");
-				printf(" ** Starting searching independant sets : ** \n");
+				printf(" ** Starting searching independant sets 2 : ** \n");
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
@@ -162,7 +163,7 @@ int main(int argc, char* argv[])
 			// 1 - Search Independant sets
 			else if (uiChooseOperation == 3){
 				printf("\n ****************************************\n");
-				printf(" ** Starting searching independant sets : ** \n");
+				printf(" ** Starting searching independant sets 3 : ** \n");
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
@@ -183,7 +184,7 @@ int main(int argc, char* argv[])
 			// 1 - Search Independant sets
 			else if (uiChooseOperation == 4){
 				printf("\n ****************************************\n");
-				printf(" ** Starting searching independant sets : ** \n");
+				printf(" ** Starting searching independant sets 4 : ** \n");
 				printf(" **************************************** \n\n");
 
 				printf("TODO !!");
@@ -206,7 +207,7 @@ int main(int argc, char* argv[])
 			// 1 - Search Independant sets
 			else if (uiChooseOperation == 5){
 				printf("\n ****************************************\n");
-				printf(" ** Starting searching independant sets : ** \n");
+				printf(" ** Starting searching independant sets 5 : ** \n");
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
@@ -228,7 +229,7 @@ int main(int argc, char* argv[])
 			// 6 - Search Independant sets
 			else if (uiChooseOperation == 6){
 				printf("\n ****************************************\n");
-				printf(" ** Starting searching independant sets : ** \n");
+				printf(" ** Starting searching independant sets 6 : ** \n");
 				printf(" **************************************** \n\n");
 
 				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
@@ -246,11 +247,32 @@ int main(int argc, char* argv[])
 				std::cout << "\n\n - fin du programme - \n" << std::endl;
 				uiChooseOperation = 100;
 			}
+			// 7 - Search Independant sets - heuristic
+			else if (uiChooseOperation == 7) {
+				printf("\n ****************************************\n");
+				printf(" ** Starting searching independant sets 7 : ** \n");
+				printf(" **************************************** \n\n");
+
+				Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+
+				ctTime_exec = clock();
+
+				pMax_inde_sets_table->MITenum_max_inde_set7(pGraph, 0);
+				std::cout << "\n\n - Ensemble maximum ind\x082" << "pendant de sommet trouv\x082" << " : \n" << std::endl;
+				pMax_inde_sets_table->GRTprint();
+
+				ctTime_exec = clock() - ctTime_exec;
+				std::cout << "\n\n \t\t temps d'ex\x082" << "cution " << std::endl;
+				printf("%f \n\n", ((float)ctTime_exec) / CLOCKS_PER_SEC);
+
+				std::cout << "\n\n - fin du programme - \n" << std::endl;
+				uiChooseOperation = 100;
+			}
 			// 2 - Invert graph
-			else if (uiChooseOperation == 7)
+			else if (uiChooseOperation == 8)
 			{
 				printf("\n ****************************************\n");
-				printf(" ** Starting creation inverted graph : ** \n");
+				printf(" ** Starting creation inverted graph 8 : ** \n");
 				printf(" **************************************** \n\n");
 
 				Cgraph * pInvertedGraph = pGraph->GRAinvert_all_edges();
