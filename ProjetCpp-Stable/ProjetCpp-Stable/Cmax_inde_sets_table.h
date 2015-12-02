@@ -100,8 +100,13 @@ public:
 	void MITenum_max_inde_set4(Cgraph * pGraph);
 	void MITenum_max_inde_set5(Cgraph * pGraph);
 	void MITenum_max_inde_set6(Cgraph * pGraph, unsigned int uiIndex_current_vertex);
+<<<<<<< HEAD:ProjetCpp-Stable/ProjetCpp-Stable/Cmax_inde_sets_table.h
 	void MITenum_max_inde_set7(Cgraph * pGraph, unsigned int &uiNb_call);
 	void MITenum_max_inde_set8(Cgraph * pGraph, Cgraph * pIndependant_sets);
+=======
+	void MITenum_max_inde_set7(Cgraph * pGraph, Cgraph * pIndependant_sets);
+
+>>>>>>> origin/master:Projet Recherche de Stable/ProjetCpp-Graphes/Cmax_inde_sets_table.h
 
 	bool MITtest_if_solution_exist(Cgraph * pGraph_to_compare);
 

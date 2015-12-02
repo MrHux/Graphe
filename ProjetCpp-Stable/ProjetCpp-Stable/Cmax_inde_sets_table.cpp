@@ -163,14 +163,12 @@ void Cmax_inde_sets_table::MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndep
 *******************************************************************************/
 void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pIndependant_sets){
 	printf("TODO");
-	//printf("TODO");
-	//valerian
 	// "regarder si il y a des sommets equivalents"
 	// recherche des sommets "equivalents"
 	//cad les sommets qui quand ils sont enleves enlevent les memes autres sommets que qu'un autre.
 	//ex :
 	//	 /---\
-				//	1--2--3
+	//	1--2--3
 	//	 \ | / 
 	//	   5
 	// ici retirer 1, 2, 3 ou 5, c'est pareil !!
@@ -183,10 +181,10 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 	// ici retirer 2 ou 3, c'est pareil !!
 
 	//on va distinguer deux types de groupes:
-	//	1: groupe d'exclusion/connexes/communaute
+	//	1: groupe d'exclusion/connexes/communaute --> ENSEMBLE INTERDEPENDANT
 	//		si 1 sommet du groupe est pris alors on doit exclure tous les autres.
 	//		Les solutions sont donc obtenue avec un remplacement de ce sommet par ceux du groupe a k sommets ( ==> k solutions diferentes)
-	//	2: groupe de complementaires/parallelles
+	//	2: groupe de complementaires/parallelles --> ENSEMBLE EQUIVALENT
 	//		si 1 sommet du groupe est pris, alors autant prendre tous les autres.
 	//		On ajoute alors tous le groupe de k sommets a la solution ( ==> solution unique)
 
@@ -203,6 +201,25 @@ void Cmax_inde_sets_table::MITenum_max_inde_set2(Cgraph * pGraph, Cgraph * pInde
 	*				fortement connexe communauty
 	*/
 
+	/*
+	*	tant qu'il y a des sommets dans le graphe (while(pGraph_copy->GRAget_nb_vertex() != 0))
+	*	1) prendre le sommet ayant un nombre minimum d'edge (et de successeurs ayants un maximum d'edges)
+	*	2) regarder si ce somment fait partie d'un ensemble equivalent/interdépendant ou non:
+	*		y a-t-il des successeurs de successeurs qui ont les mêmes successeurs?
+	*		pour tous les successeurs de successeurs : currentNode.listSuccessors == currentNode.successor.successor.listSuccessors ?
+	*	pour 1 à n-ième successeur du node courrent (suc_1)
+	*		pour 1 à m-ième successeur du node suc_1 (donc suc_2 pour successeur au 2ème degré)
+	*			si oui (il en existe au moins un) : (suc_2.listSuccessors == currentNode.listSuccessors)
+	*				si le node courrent et le successeur de successeur sont reliés (areLinked(suc_2, currentNode) == true)
+	*					ajouter à liste groupe interdépendant
+	*					continuer la recherche (jusqu'à la fin de la liste des successeurs de successeurs de successeurs)
+	*				sinon le node courrent et le successeur de successeur ne sont pas reliés
+	*					ajouter à la liste groupe équivalent
+	*					continuer la recherche (jusqu'à la fin de la liste des successeurs de successeurs de successeurs)
+	*			sinon 
+	*				ajouter le node à la solution puis supprimer le node et ses successeurs
+	*				relancer la recherche sur la même fonction
+	*/
 
 }
 
@@ -368,6 +385,56 @@ void Cmax_inde_sets_table::MITenum_max_inde_set5(Cgraph * pGraph){
 	MITenum_max_inde_set3(pGraph_copy, pIndependent_set);
 
 	delete(pIndependent_set);
+}
+
+
+/***
+* void MITenum_max_inde_set(Cgraph * pGraph, Cgraph * pIndependant_sets) - Heuristic that search ONE maximum independant set of a graph
+*
+*Purpose:
+*       search ONE maximum independant set of a graph
+*
+*Entry:
+*       Cgraph * pGraph				-		a graph , to determine independant sets
+*		Cgraph * pIndependant_sets	-		an independant set of the graph, NULL if first call of the function.
+*
+*Return:
+*		nothing
+*
+*******************************************************************************/
+void Cmax_inde_sets_table::MITenum_max_inde_set7(Cgraph * pGraph, Cgraph * pIndependant_sets) {
+	Cgraph * pGraph_copy = new Cgraph(*pGraph);
+	pGraph_copy->GRAorder_by_degree();
+
+	/*
+	printf("\n\n \t\t Affichage du graphe entrée dans la fonction : nb vertex %d", pGraph_copy->GRAget_nb_vertex());
+	pGraph_copy->GRAprint();
+
+	ICI on cherche une solution en prenant le sommet ayant un nombre minimum d'arêtes.
+	C'est une heuristique gloutonne et très rapide mais qui ne donne qu'une unique solution
+	*/
+	std::cout << "pGraph_copy->GRAget_nb_vertex()\t" << pGraph_copy->GRAget_nb_vertex() << std::endl;
+	while (pGraph_copy->GRAget_nb_vertex() != 0) {
+		//get the 1st vertex of the graph (is has been ordered by increasing number of edge)
+		//add that vertex to the solution
+		//delete that vertex from the graph
+		//order the graph by number of edge
+			//--> return to the beginning of the while
+
+		Cvertex * pVertex = pGraph_copy->GRAget_vertex(0);// get the vertex at index
+		unsigned int uiVertex_id = pVertex->VERget_id_vertex();//get the id of the vertex
+		pIndependant_sets->GRAadd_vertex(new Cvertex(*pVertex));//add a copy of the vertex to the independant set
+																	//remove all vertex who has a shared edge
+		pGraph_copy->GRAdelete_vertex_pointed_by(uiVertex_id);
+		pGraph_copy->GRAdelete_vertex_who_point(uiVertex_id);
+		pGraph_copy->GRAremove_vertex_from_vertex_id(uiVertex_id);//remove the vertex
+	}
+	//order solution by increasing index
+	//print solution
+	delete(pGraph_copy);//delete old copy who lack some vertices
+	pIndependant_sets = new Cgraph(*pIndependant_sets);//get a new copy of the current independent set to be calculated
+	pGraph_copy = new Cgraph(*pGraph);//get a new copy with all vertices
+	pGraph_copy->GRAorder_by_degree();
 }
 
 
