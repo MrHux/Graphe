@@ -206,9 +206,11 @@ void Cvertex::VERset_list_edges_out(Cedges** ppList_edges_out, unsigned int uiNb
 	else{
 		if (uiVERnb_edges_out == 0){
 			uiVERnb_edges_out = uiNb_edges_out;
+			//if the new list is null
 			if (uiVERnb_edges_out == 0 && ppList_edges_out == NULL){
 				ppVERlist_edges_out = NULL;
 			}
+			//if the new list is not null
 			else{
 				ppVERlist_edges_out = new Cedges*[uiVERnb_edges_out];
 				for (unsigned int indexOfEdgeOut = 0; indexOfEdgeOut < uiVERnb_edges_out; indexOfEdgeOut++){
@@ -217,12 +219,14 @@ void Cvertex::VERset_list_edges_out(Cedges** ppList_edges_out, unsigned int uiNb
 			}
 		}
 		else{
+			//delete the old list
 			for (unsigned int indexOfEdgeOut = 0; indexOfEdgeOut < uiVERnb_edges_out; indexOfEdgeOut++)
 			{
-				delete ppList_edges_out[indexOfEdgeOut];
+				delete ppVERlist_edges_out[indexOfEdgeOut];
 			}
-			delete[] ppList_edges_out;
+			delete[] ppVERlist_edges_out;
 
+			//set the new one
 			uiVERnb_edges_out = uiNb_edges_out;
 			ppVERlist_edges_out = new Cedges*[uiVERnb_edges_out];
 			for (unsigned int indexOfEdgeOut = 0; indexOfEdgeOut < uiVERnb_edges_out; indexOfEdgeOut++){
@@ -273,12 +277,13 @@ void Cvertex::VERset_list_edges_in(Cedges** ppList_edges_in, unsigned int uiNb_e
 				}
 			}
 		}
+		//if initial list is not empty 
 		else{
 			for (unsigned int indexOfEdgeIn = 0; indexOfEdgeIn < uiVERnb_edges_in; indexOfEdgeIn++)
 			{
-				delete ppList_edges_in[indexOfEdgeIn];
+				delete ppVERlist_edges_in[indexOfEdgeIn];
 			}
-			delete[] ppList_edges_in;
+			delete[] ppVERlist_edges_in;
 
 			uiVERnb_edges_in = uiNb_edges_in;
 			ppVERlist_edges_in = new Cedges*[uiVERnb_edges_in];

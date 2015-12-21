@@ -72,6 +72,32 @@ void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_out(){
 
 	assert(testExceptionIsThrowed == true);
 
+	printf("Test : initial list not null, list to set not null :\n");
+
+	delete(vertex);
+	vertex = new Cvertex();
+
+	ppTabEdge = new Cedges*[3];
+	ppTabEdge[0] = new Cedges(1);
+	ppTabEdge[1] = new Cedges(2);
+	ppTabEdge[2] = new Cedges(3);
+
+	vertex->VERset_list_edges_out(ppTabEdge, 3);
+
+	//just verify if the vertex is correctly set
+	assert(vertex->VERget_nb_edges_out() == 3);
+
+	delete(ppTabEdge);
+	ppTabEdge = new Cedges*[3];
+	ppTabEdge[0] = new Cedges(1);
+	ppTabEdge[1] = new Cedges(2);
+	ppTabEdge[2] = new Cedges(3);
+	ppTabEdge[3] = new Cedges(4);
+
+	vertex->VERset_list_edges_out(ppTabEdge, 4);
+	//test if the remplacement of the list worked well
+	assert(vertex->VERget_nb_edges_out() == 4);
+
 }
 
 void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_in(){
