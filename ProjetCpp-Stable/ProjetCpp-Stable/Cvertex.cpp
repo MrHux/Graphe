@@ -480,17 +480,26 @@ Cedges * Cvertex::VERremove_edge_from_list_edges_out(Cedges * pEdge_to_delete){
 *
 *******************************************************************************/
 Cedges * Cvertex::VERremove_edge_from_list_edges_in(Cedges * pEdge_to_delete){
+	//find the index of the edge we want to remove
 	unsigned int uiIndexOfEdgeToDelete = VERfind_index_in_list_edge_in(pEdge_to_delete);
+	//if the index of the edge we want to remove exist , if it don't exist then his value will be higher than uiVERnb_edges_in
 	if (uiIndexOfEdgeToDelete < uiVERnb_edges_in){
+
+		//made a copy of the edge to delete, it will be returned by the function
 		Cedges * pOldEdgeToDelete = new Cedges(*ppVERlist_edges_in[uiIndexOfEdgeToDelete]);
+		//new list of the edge who remain
 		Cedges ** ppListEdgeConcat = NULL;
 
+		//if the number of edge in the list is higher than one , we need to create a new list without the edge we want to remove
 		if (uiVERnb_edges_in > 1){
+			//allocate a new list with -1 edge
 			ppListEdgeConcat = new Cedges*[uiVERnb_edges_in - 1];
+
+			//copy the first part of the list until we reach the edge we want to remove
 			for (unsigned int indexOfEdge = 0; indexOfEdge < uiIndexOfEdgeToDelete; indexOfEdge++){
 				ppListEdgeConcat[indexOfEdge] = new Cedges(*ppVERlist_edges_in[indexOfEdge]);
 			}
-
+			//continue to copy after the removed edge
 			for (unsigned int indexOfEdge = uiIndexOfEdgeToDelete + 1; indexOfEdge < uiVERnb_edges_in; indexOfEdge++){
 				ppListEdgeConcat[indexOfEdge-1] = new Cedges(*ppVERlist_edges_in[indexOfEdge]);
 			}
@@ -502,9 +511,10 @@ Cedges * Cvertex::VERremove_edge_from_list_edges_in(Cedges * pEdge_to_delete){
 			delete[] ppVERlist_edges_in;
 		}
 
+		//put the new list without the removed edge
 		ppVERlist_edges_in = ppListEdgeConcat;
 		uiVERnb_edges_in--;
-
+		//return the removed edge
 		return pOldEdgeToDelete;
 	}
 	return NULL;

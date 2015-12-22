@@ -543,7 +543,7 @@ Cvertex * Cgraph::GRAremove_vertex_from_index(unsigned int uiIndex_vertex) throw
 		}
 
 		//delete the vertex
-		if (uiGRAnb_vertex > 1){
+		if (uiGRAnb_vertex >= 2){
 
 			pOldVertexToDelete = ppGRAlist_vertex[uiIndex_vertex];
 			ppListVertexConcat = new Cvertex*[uiGRAnb_vertex - 1];

@@ -87,8 +87,12 @@ void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_out(){
 	//just verify if the vertex is correctly set
 	assert(vertex->VERget_nb_edges_out() == 3);
 
-	delete(ppTabEdge);
-	ppTabEdge = new Cedges*[3];
+	delete(ppTabEdge[0]);
+	delete(ppTabEdge[1]);
+	delete(ppTabEdge[2]);
+	delete[](ppTabEdge);
+
+	ppTabEdge = new Cedges*[4];
 	ppTabEdge[0] = new Cedges(1);
 	ppTabEdge[1] = new Cedges(2);
 	ppTabEdge[2] = new Cedges(3);
@@ -97,7 +101,13 @@ void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_out(){
 	vertex->VERset_list_edges_out(ppTabEdge, 4);
 	//test if the remplacement of the list worked well
 	assert(vertex->VERget_nb_edges_out() == 4);
+	
+	delete(ppTabEdge[0]);
+	delete(ppTabEdge[1]);
+	delete(ppTabEdge[2]);
+	delete(ppTabEdge[3]);
 
+	delete[](ppTabEdge);
 }
 
 void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_in(){
@@ -116,6 +126,8 @@ void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_in(){
 	ppTabEdge[1] = new Cedges(2);
 	ppTabEdge[2] = new Cedges(3);
 
+
+
 	vertex->VERset_list_edges_in(ppTabEdge, 3);
 
 	assert(vertex->VERget_nb_edges_in() == 3);
@@ -133,8 +145,15 @@ void Cvertex_UNIT::TEST_UNIT_VERset_list_edges_in(){
 	catch (Cexception exc){
 		testExceptionIsThrowed = true;
 	}
+	delete(ppTabEdge[1]);
 
 	assert(testExceptionIsThrowed == true);
+
+	delete(ppTabEdge[0]);
+	delete(ppTabEdge[2]);
+
+
+	delete[](ppTabEdge);
 }
 
 void Cvertex_UNIT::TEST_UNIT_VERoperatorEqual(){

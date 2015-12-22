@@ -14,7 +14,7 @@
 *		char **	- All the values of the graph in the file.
 *
 *******************************************************************************/
-char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw (Cexception)
+char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw ()
 {
 	char ** ppFile_values = NULL; // Minimum values to store 2, a pair : description => value
 
@@ -48,24 +48,35 @@ char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw (Cexception)
 				// If we read a character of table end ']', we need to add only one columns to table
 				if (strcmp(pcValue, CHAR_END_TABLE) == 0)
 				{
-					ppFile_values = (char **)realloc(ppFile_values, (uiIndexfile_values + 1) * sizeof(char *));
-					if (ppFile_values == NULL)
+					char ** ppTest_realloc = NULL;//pointer to test the realloc
+					ppTest_realloc = (char **)realloc(ppFile_values, (uiIndexfile_values + 1) * sizeof(char *));
+					if (ppTest_realloc == NULL)
 					{
 						Cexception exc(ERROR_CHANGING_SIZE_TABLE_VALUES);
 						throw exc;
 					}
 				}
 				// For each new pair read in the line, add 2 columns to our table.
+				//when we read a value if there was no precedent value read and uiNumber_value_per_line = 0
+				//then we know that is it the first value of a pair so we allocate the place for 2 values (the one we had read and the one who will be read just after)
 				else if (uiNumber_values_per_line % 2 == 1)
 				{
-					ppFile_values = (char **)realloc(ppFile_values, (uiIndexfile_values + 2) * sizeof(char *));
-					if (ppFile_values == NULL)
+					char ** ppTest_realloc = NULL;
+					ppTest_realloc = (char **)realloc(ppFile_values, (uiIndexfile_values + 2) * sizeof(char *));
+					if (ppTest_realloc == NULL)
 					{
 						Cexception exc(ERROR_CHANGING_SIZE_TABLE_VALUES);
 						throw exc;
 					}
 				}
-
+				// we should'nt go in this branch, because uiNumber_values_per_line%2 should not be equal to 1 when ppFile_values has not been precedently allocated
+				// we put this condition to verify that all went well.
+				if (ppFile_values==NULL) {
+					//we can't allocate on a null pointer, but that should not be the case
+					Cexception exc(ERROR_NULL_POINTER);
+					throw exc;
+				}
+				
 				// Allocating a new cstring into our table to store the token
 				ppFile_values[uiIndexfile_values] = new char[strlen(pcValue) + 1];
 				// Copy in ppFile_values[uiIndexfile_values] (wich is strlen(pcValue) + 1 characters long) the cstring pcValue, 
@@ -79,10 +90,19 @@ char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw (Cexception)
 		}
 
 		// Adding a new column to store NULL, indicating the end of the table
-		ppFile_values = (char **)realloc(ppFile_values, (uiIndexfile_values + 1) * sizeof(char *));
-		if (ppFile_values == NULL)
+		char ** ppTest_realloc = NULL;//pointer to test the realloc
+		ppTest_realloc = (char **)realloc(ppFile_values, (uiIndexfile_values + 1) * sizeof(char *));
+		if (ppTest_realloc == NULL)
 		{
 			Cexception exc(ERROR_CHANGING_SIZE_TABLE_VALUES);
+			throw exc;
+		}
+
+		// we should'nt go in this branch, because uiNumber_values_per_line%2 should not be equal to 1 when ppFile_values has not been precedently allocated
+		// we put this condition to verify that all went well.
+		if (ppFile_values == NULL) {
+			//we can't allocate on a null pointer, but that should not be the case
+			Cexception exc(ERROR_NULL_POINTER);
 			throw exc;
 		}
 
