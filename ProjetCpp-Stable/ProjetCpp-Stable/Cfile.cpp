@@ -55,6 +55,7 @@ char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw ()
 						Cexception exc(ERROR_CHANGING_SIZE_TABLE_VALUES);
 						throw exc;
 					}
+					ppFile_values = ppTest_realloc;
 				}
 				// For each new pair read in the line, add 2 columns to our table.
 				//when we read a value if there was no precedent value read and uiNumber_value_per_line = 0
@@ -68,6 +69,7 @@ char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw ()
 						Cexception exc(ERROR_CHANGING_SIZE_TABLE_VALUES);
 						throw exc;
 					}
+					ppFile_values = ppTest_realloc;
 				}
 				// we should'nt go in this branch, because uiNumber_values_per_line%2 should not be equal to 1 when ppFile_values has not been precedently allocated
 				// we put this condition to verify that all went well.
@@ -97,6 +99,7 @@ char ** Cfile::FILparse_file(const char* pcFile_to_parse) throw ()
 			Cexception exc(ERROR_CHANGING_SIZE_TABLE_VALUES);
 			throw exc;
 		}
+		ppFile_values = ppTest_realloc;
 
 		// we should'nt go in this branch, because uiNumber_values_per_line%2 should not be equal to 1 when ppFile_values has not been precedently allocated
 		// we put this condition to verify that all went well.
