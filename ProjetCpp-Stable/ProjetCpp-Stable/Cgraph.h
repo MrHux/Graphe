@@ -212,7 +212,7 @@ public:
 	*
 	*
 	*******************************************************************************/
-	Cvertex * GRAget_vertex(unsigned int uiId_vertex);
+	Cvertex * GRAget_vertex(unsigned int uiId_vertex) throw (Cexception);
 
 
 	/*!
@@ -282,7 +282,7 @@ public:
 	*		Throw an exception if the index is out of the range of number of edge in the graph
 	*
 	*******************************************************************************/
-	Cvertex* GRAremove_vertex_from_index(unsigned int uiIndex_vertex);
+	void GRAremove_vertex_from_index(unsigned int uiIndex_vertex)throw (Cexception);
 
 	/*!
 	*GRAupdate_vertex_from_index(unsigned int uiIndex_vertex, Cvertex* pCvertex) - update a vertex of the graph
@@ -338,7 +338,7 @@ public:
 	*		none
 	*
 	*******************************************************************************/
-	void Cgraph::GRAprint();
+	void GRAprint();
 
 
 	/*!
@@ -354,7 +354,7 @@ public:
 	*		none
 	*
 	*******************************************************************************/
-	void Cgraph::GRAprint(char * pOption);
+	void GRAprint(char * pOption);
 
 	/*!
 	*GRAremove_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in) - remove an edge in the graph
@@ -373,7 +373,7 @@ public:
 	*		Throw an error if the value of the index are out of range of number of edge
 	*
 	*******************************************************************************/
-	void GRAremove_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in);
+	void GRAremove_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in)throw (Cexception);
 
 	/*!
 	*GRAupdate_edge_from_index(unsigned int uiIndex_vertex_out, unsigned int uiIndex_vertex_in, unsigned int uiIndex_new_vertex_out, unsigned int uiIndex_new_vertex_in) - update an edge in the graph

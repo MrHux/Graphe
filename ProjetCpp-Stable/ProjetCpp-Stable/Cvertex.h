@@ -77,7 +77,7 @@ public:
 	*\throws	ERROR_LIST_NOT_NULL					-	if one of the list in parameter is not NULL and the number of edges associated is 0
 	*
 	*******************************************************************************/
-	Cvertex(unsigned int uiId_vertex, Cedges** ppList_edges_out, Cedges** ppList_edges_in, unsigned int uiNb_edges_out, unsigned int uiNb_edges_in);
+	Cvertex(unsigned int uiId_vertex, Cedges** ppList_edges_out, Cedges** ppList_edges_in, unsigned int uiNb_edges_out, unsigned int uiNb_edges_in)throw (Cexception);
 	
 	/*!
 	* ~Cvertex() - destroy a Cvertex correctly
@@ -122,7 +122,7 @@ public:
 	*		ERROR_LIST_NOT_NULL					-	if the list in parameter is not NULL and the number of edges associated is 0
 	*
 	*******************************************************************************/
-	void VERset_list_edges_out(Cedges ** ppList_edges_out, unsigned int uiNb_edges_out);
+	void VERset_list_edges_out(Cedges ** ppList_edges_out, unsigned int uiNb_edges_out)throw (Cexception);
 
 	/*!
 	* VERset_list_edges_in(Cedges** ppList_edges_in, unsigned int uiNb_edges_in) - set the list of edge who go in the vertex
@@ -142,7 +142,7 @@ public:
 	*		ERROR_LIST_NOT_NULL					-	if the list in parameter is not NULL and the number of edges associated is 0
 	*
 	*******************************************************************************/
-	void VERset_list_edges_in(Cedges ** ppList_edges_in, unsigned int uiNb_edges_in);
+	void VERset_list_edges_in(Cedges ** ppList_edges_in, unsigned int uiNb_edges_in)throw (Cexception);
 
 	/*!
 	* VERadd_edge_to_list_edges_out(Cedges * pEdge_to_add) - add an edge to the list of edge who go out the vertex

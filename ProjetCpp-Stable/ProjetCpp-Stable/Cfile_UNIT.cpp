@@ -1,7 +1,5 @@
+#include "Cfile_UNIT.h"
 
-#include "stdafx.h"
-
-#ifdef _DEBUG
 void Cfile_UNIT::TEST_UNIT_parse_file()
 {
 	std::cout << " - Test : Parsing input file 1" << std::endl;
@@ -68,4 +66,3 @@ void Cfile_UNIT::TEST_UNIT_parse_file()
 
 	assert(values2[10] == NULL);
 }
-#endif
