@@ -158,21 +158,21 @@ void Cgraph_table::GRTadd_graph(Cgraph * pGraph) {
 
     //create a new table with + 1 graph
     ppNew_graph_table = new Cgraph*[uiGRTnb_graph + 1];
-    for(unsigned int uiIndexGraph = 0 ; uiIndexGraph < uiGRTnb_graph ; uiIndexGraph ++){
-        ppNew_graph_table[uiIndexGraph]=ppGRTgraph_table[uiIndexGraph];
+	unsigned int uiIndexGraph = 0;
+	//create a copy of the old table 
+    for(uiIndexGraph = 0 ; uiIndexGraph < uiGRTnb_graph ; uiIndexGraph ++){
+        ppNew_graph_table[uiIndexGraph]= new Cgraph(*ppGRTgraph_table[uiIndexGraph]);
     }
     
     //delete the old table
     GRTempty_table();
-    
+	uiGRTnb_graph = uiIndexGraph;
     //set the new table
     ppGRTgraph_table = ppNew_graph_table;
     
     //add the graph to the table
     ppGRTgraph_table[uiGRTnb_graph] = new Cgraph(*pGraph);
     uiGRTnb_graph++;
-
-
 }
 
 /*delete graph at index, insert graph, modify graph, etc are function not essential for the purpose of the project but are function who could be interesting to add for that class*/
