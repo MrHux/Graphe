@@ -1,5 +1,7 @@
+#include "stdafx.h"
 #include "Cfile_UNIT.h"
 
+#ifndef NDEBUG
 void Cfile_UNIT::TEST_UNIT_parse_file() {
     std::cout << " - Test : Parsing input file 1" << std::endl;
 
@@ -78,3 +80,5 @@ void Cfile_UNIT::TEST_UNIT_parse_file() {
     free(values2);
     
 }
+
+#endif
