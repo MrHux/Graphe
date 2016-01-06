@@ -9,7 +9,9 @@
 int main(int argc, char* argv[]) {
     std::cout << std::endl << "Les Graphes - Mathieu Boutolleau & Paul Fayoux (+ Ensemble de Stable Maximum - Valerian Menin & Paul Fayoux) " << std::endl << std::endl;
 
-#ifdef _DEBUG
+    
+    #ifdef DEBUG
+
     std::cout << "--- Beginning Unit Tests ---" << std::endl;
 
     printf("\n ***********************************\n");
@@ -65,7 +67,7 @@ int main(int argc, char* argv[]) {
     Cmax_inde_sets_table_UNIT::TEST_UNIT_MITenum_max_inde_set();
 
 #endif
-
+    
     std::cout << "--- Beginning Main Algorithm ---" << std::endl << std::endl;
 
     // Number of the operation chosen to do on run-time
@@ -100,14 +102,14 @@ int main(int argc, char* argv[]) {
             while (uiChooseOperation != 10 && uiChooseOperation != uiVerify) {
                 std::cout << std::endl << "Veuiller choisir l'op\x082" << "ration \x085 faire :" << std::endl << std::endl;
 
-                std::cout << "1 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 1" << std::endl;
-                std::cout << "2 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 2" << std::endl;
-                std::cout << "3 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 3" << std::endl;
-                std::cout << "4 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 4" << std::endl;
-                std::cout << "5 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
-                std::cout << "6 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
-                std::cout << "7 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
-                std::cout << "8 - Trouver tous les ensembles maximum ind\x082pendants de sommets version 5" << std::endl;
+                std::cout << "1 - Trouver tous les ensembles de stables maximums version 1" << std::endl;
+                std::cout << "2 - Même algorithme que 1 mais on ne parcours que les 2 sommets de degré le plus faible " << std::endl;
+                std::cout << "3 - Même algorithme que 1 mais on s'arrête de calculer une solution\n si on voit qu'elle ne pourra améliorer le resultat" << std::endl;
+                std::cout << "4 - Algorithme de recherche de stable maximum 'Force Brute' " << std::endl;
+                std::cout << "5 - Heuristique Gloutonne de recherche de stable le plus grand" << std::endl;
+                std::cout << "6 - Heuristique Inverse (on supprime les sommets de degré plus grand) " << std::endl;
+                std::cout << "7 - Algorithme de recherche d'un stable maximum (Diviser pour Regner)" << std::endl;
+                std::cout << "8 - Heuristique de recherche de stable le plus grand\n (ajout des sommets de degré le plus faibe et des sommets qui ont le plus d'arêtes)" << std::endl;
                 std::cout << "9 - Cr\x082" << "ation d'un graph invers\x082" << "es en argument" << std::endl;
                 std::cout << "10 - Quitter" << std::endl << std::endl;
 
@@ -155,7 +157,7 @@ int main(int argc, char* argv[]) {
 
                     ctTime_exec = clock();
 
-                    pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, pGraphNull);
+                    pMax_inde_sets_table->MITenum_max_inde_set3(pGraph, pGraphNull);
 
                     ctTime_exec = clock() - ctTime_exec;
 
@@ -179,7 +181,7 @@ int main(int argc, char* argv[]) {
                     Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
                     ctTime_exec = clock();
 
-                    pMax_inde_sets_table->MITenum_max_inde_set3(pGraph, pGraphNull);
+                    pMax_inde_sets_table->MITenum_max_inde_set8(pGraph, pGraphNull);
 
                     ctTime_exec = clock() - ctTime_exec;
 
@@ -201,13 +203,11 @@ int main(int argc, char* argv[]) {
                     printf(" ** Starting searching independant sets : ** \n");
                     printf(" **************************************** \n\n");
 
-                    printf("TODO !!");
-
                     Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
 
                     ctTime_exec = clock();
 
-                    pMax_inde_sets_table->MITenum_max_inde_set4(pGraph);
+                    pMax_inde_sets_table->MITenum_max_inde_set6(pGraph,0);
 
                     ctTime_exec = clock() - ctTime_exec;
 
@@ -227,10 +227,12 @@ int main(int argc, char* argv[]) {
                     printf(" **************************************** \n\n");
 
                     Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
+                    
+                    pMax_inde_sets_table->MITenum_max_inde_set5(pGraph,pGraphNull);
 
                     ctTime_exec = clock();
 
-                    pMax_inde_sets_table->MITenum_max_inde_set5(pGraph);
+                    //pMax_inde_sets_table->MITenum_max_inde_set5(pGraph);
                     ctTime_exec = clock() - ctTime_exec;
 
                     std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
@@ -252,7 +254,7 @@ int main(int argc, char* argv[]) {
 
                     ctTime_exec = clock();
 
-                    pMax_inde_sets_table->MITenum_max_inde_set6(pGraph, 0);
+                    pMax_inde_sets_table->MITenum_max_inde_set4(pGraph);
 
                     ctTime_exec = clock() - ctTime_exec;
 
@@ -274,12 +276,10 @@ int main(int argc, char* argv[]) {
                     Cmax_inde_sets_table * pMax_inde_sets_table = new Cmax_inde_sets_table();
 
                     ctTime_exec = clock();
-
-                    unsigned int i = 0;
-                    pMax_inde_sets_table->MITenum_max_inde_set7(pGraph, i);
+                    
+                    pMax_inde_sets_table->MITenum_max_inde_set7(pGraph);
 
                     ctTime_exec = clock() - ctTime_exec;
-
 
                     std::cout << "\n\n - Ensemble maximum ind\x082" << "pendants de sommet trouv\x082" << "s : \n" << std::endl;
                     pMax_inde_sets_table->GRTprint();
@@ -300,7 +300,7 @@ int main(int argc, char* argv[]) {
 
                     ctTime_exec = clock();
 
-                    pMax_inde_sets_table->MITenum_max_inde_set8(pGraph, pGraphNull);
+                    pMax_inde_sets_table->MITenum_max_inde_set2(pGraph, pGraphNull);
 
                     ctTime_exec = clock() - ctTime_exec;
 
@@ -343,7 +343,7 @@ int main(int argc, char* argv[]) {
             //delete the graph allocated
             delete pGraph;
             delete pGraphNull;
-
+	//catch all the exception thrown
         } catch (Cexception exc) {
             printf("Exception risen , code : %d ", exc.EXCgetValue());
             switch (exc.EXCgetValue()) {

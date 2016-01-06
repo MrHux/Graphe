@@ -41,7 +41,6 @@ Cvertex::Cvertex(const Cvertex &vertex_to_copy) {
             for (unsigned int indexOfEdgeIn = 0; indexOfEdgeIn < uiVERnb_edges_in; indexOfEdgeIn++) {
                 ppVERlist_edges_in[indexOfEdgeIn] = new Cedges(*vertex_to_copy.ppVERlist_edges_in[indexOfEdgeIn]);
             }
-
         }
         else{
             ppVERlist_edges_in=NULL;
@@ -140,6 +139,7 @@ Cvertex::Cvertex(unsigned int uiId_vertex, Cedges** ppList_edges_out, Cedges** p
  *******************************************************************************/
 Cvertex::~Cvertex() {
 
+    //delete the list of edge in
     if (ppVERlist_edges_in != NULL) {
         for (unsigned int indexOfEdgeIn = 0; indexOfEdgeIn < uiVERnb_edges_in; indexOfEdgeIn++) {
             if (ppVERlist_edges_in[indexOfEdgeIn] != NULL) {
@@ -151,6 +151,8 @@ Cvertex::~Cvertex() {
         ppVERlist_edges_in = NULL;
 
     }
+    
+    //delete the list of edge 
     if (ppVERlist_edges_out != NULL) {
         for (unsigned int indexOfEdgeOut = 0; indexOfEdgeOut < uiVERnb_edges_out; indexOfEdgeOut++) {
             if (ppVERlist_edges_out[indexOfEdgeOut] != NULL) {
@@ -317,7 +319,7 @@ unsigned int Cvertex::VERadd_edge_to_list_edges_out(Cedges * pEdge_to_add) {
         for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_out; indexOfEdge++) {
             ppListEdgeConcat[indexOfEdge] = new Cedges(*ppVERlist_edges_out[indexOfEdge]);
         }
-        ppListEdgeConcat[uiVERnb_edges_out] = pEdge_to_add; //add new edge
+        ppListEdgeConcat[uiVERnb_edges_out] = new Cedges(*pEdge_to_add); //add new edge
 
         if (ppVERlist_edges_out != NULL && uiVERnb_edges_out != 0) {
             for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_out; indexOfEdge++) {
@@ -356,7 +358,7 @@ unsigned int Cvertex::VERadd_edge_to_list_edges_in(Cedges * pEdge_to_add) {
         for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_in; indexOfEdge++) {
             ppListEdgeConcat[indexOfEdge] = new Cedges(*ppVERlist_edges_in[indexOfEdge]);
         }
-        ppListEdgeConcat[uiVERnb_edges_in] = pEdge_to_add; //add new edge
+        ppListEdgeConcat[uiVERnb_edges_in] = new Cedges(*pEdge_to_add); //add new edge
 
         if (ppVERlist_edges_in != NULL && uiVERnb_edges_in != 0) {
             for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_in; indexOfEdge++) {
@@ -500,13 +502,13 @@ Cedges * Cvertex::VERremove_edge_from_list_edges_in(Cedges * pEdge_to_delete) {
             for (unsigned int indexOfEdge = uiIndexOfEdgeToDelete + 1; indexOfEdge < uiVERnb_edges_in; indexOfEdge++) {
                 ppListEdgeConcat[indexOfEdge - 1] = new Cedges(*ppVERlist_edges_in[indexOfEdge]);
             }
-
+        }
             //delete old list
             for (unsigned int indexOfEdge = 0; indexOfEdge < uiVERnb_edges_in; indexOfEdge++) {
                 delete ppVERlist_edges_in[indexOfEdge];
             }
             delete[] ppVERlist_edges_in;
-        }
+        
 
         //put the new list without the removed edge
         ppVERlist_edges_in = ppListEdgeConcat;
