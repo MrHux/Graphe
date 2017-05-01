@@ -20,4 +20,6 @@ An edge is just the id number of the other vertex who form the edge.
 A main.cpp file show some exemple to how to use the library, unit test are present inside this project files.
 They are specified with the "UNIT" part of the file name.
 
-Currently we are working to add some advenced feature to search maximum independent sets in a graph the most quickly.
+-------------------------------------------------------------------------------------------------------------------
+
+New features has been added to search maximum independent sets in a graph.
