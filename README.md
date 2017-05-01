@@ -1,5 +1,5 @@
 # Graphe
-A c++ graphe library build on windows
+A c++ graph library build on windows
 
 This is an oriented-object library writted in C++ to use graph.
 Some simple function enable user to create graph and import or export graph from file.
